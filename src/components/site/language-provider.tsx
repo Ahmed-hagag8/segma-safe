@@ -29,7 +29,11 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot(): Lang {
-  return localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "ar";
+  try {
+    return localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "ar";
+  } catch {
+    return "ar";
+  }
 }
 
 function getServerSnapshot(): Lang {
@@ -37,7 +41,11 @@ function getServerSnapshot(): Lang {
 }
 
 function setStoredLang(lang: Lang) {
-  localStorage.setItem(STORAGE_KEY, lang);
+  try {
+    localStorage.setItem(STORAGE_KEY, lang);
+  } catch {
+    /* private mode — still switch the UI for this visit */
+  }
   listeners.forEach((cb) => cb());
 }
 

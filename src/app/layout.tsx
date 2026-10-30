@@ -68,6 +68,11 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+/* Applies the stored language before first paint — a returning English
+   visitor gets <html lang="en" dir="ltr"> immediately, with no Arabic
+   flash while the JS bundle hydrates (same trick next-themes uses). */
+const langBootstrap = `(function(){try{var l=localStorage.getItem("lang");if(l==="en"||l==="ar"){var d=document.documentElement;d.lang=l;d.dir=l==="en"?"ltr":"rtl"}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,6 +80,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: langBootstrap }} />
+      </head>
       <body
         className={`${cairo.variable} ${geistMono.variable} ${inter.variable} font-sans antialiased bg-background text-foreground`}
       >

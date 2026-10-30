@@ -51,23 +51,13 @@ export function Navbar() {
               priority
             />
           </span>
-          <span className="flex flex-col leading-none">
-            <span
-              className={cn(
-                "font-mono text-lg font-bold tracking-wider transition-colors",
-                scrolled ? "text-foreground" : "text-white"
-              )}
-            >
-              SIGMA <span className="text-brand">SAFE</span>
-            </span>
-            <span
-              className={cn(
-                "mt-1 text-[11px] font-semibold transition-colors",
-                scrolled ? "text-muted-foreground" : "text-white/70"
-              )}
-            >
-              {t.meta.brandTagline}
-            </span>
+          <span
+            className={cn(
+              "font-mono text-lg font-bold tracking-wider transition-colors",
+              scrolled ? "text-foreground" : "text-white"
+            )}
+          >
+            SIGMA <span className="text-brand">SAFE</span>
           </span>
         </a>
 
