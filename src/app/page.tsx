@@ -11,14 +11,15 @@ import { Partners } from "@/components/site/partners";
 import { Process } from "@/components/site/process";
 import { Services } from "@/components/site/services";
 import { WhyUs } from "@/components/site/why-us";
-import { ADDRESS, COMPANY_FULL_AR, PHONES } from "@/lib/site";
+import { PHONES } from "@/lib/site";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "سيجما سيف للمقاولات العامة — SIGMA SAFE",
   alternateName: "Sigma Safe General Contracting",
-  description: COMPANY_FULL_AR,
+  description:
+    "سيجما سيف للمقاولات العامة والتوريدات العمومية ونظم الإطفاء والإنذار ومهام الأمن الصناعي — Sigma Safe: fire suppression & alarm systems, general contracting and industrial security.",
   telephone: PHONES.map((p) => p.intl),
   address: {
     "@type": "PostalAddress",

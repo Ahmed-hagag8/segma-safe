@@ -1,18 +1,13 @@
 "use client";
 
-import { ArrowUp, MapPin, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/components/site/language-provider";
 import { WhatsAppIcon } from "@/components/site/primitives";
-import {
-  ADDRESS,
-  COMPANY_FULL_AR,
-  NAV_LINKS,
-  PHONES,
-  SERVICES,
-  WHATSAPP_URL,
-} from "@/lib/site";
+import { PHONES } from "@/lib/site";
 
 export function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
@@ -27,7 +22,7 @@ export function Footer() {
             <span className="relative block size-14 overflow-hidden rounded-2xl bg-white shadow-lg">
               <Image
                 src="/images/logo.jpg"
-                alt="شعار سيجما سيف"
+                alt={t.footer.logoAlt}
                 fill
                 sizes="56px"
                 className="object-cover"
@@ -38,28 +33,27 @@ export function Footer() {
                 SIGMA <span className="text-brand-bright">SAFE</span>
               </span>
               <span className="mt-0.5 text-xs font-semibold text-white/60">
-                سيجما سيف للمقاولات العامة
+                {t.meta.brandTagline}
               </span>
             </span>
           </a>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
-            {COMPANY_FULL_AR}
+            {t.meta.companyFull}
           </p>
           <div className="mt-6 flex items-center gap-3">
             <SocialLink
-              href={WHATSAPP_URL}
-              label="واتساب"
-              external
+              href={`https://wa.me/201039661221`}
+              label={t.footer.whatsapp}
               icon={<WhatsAppIcon className="size-5" />}
             />
           </div>
         </div>
 
         {/* quick links */}
-        <nav aria-label="روابط سريعة">
-          <h3 className="mb-5 text-lg font-black">روابط سريعة</h3>
+        <nav aria-label={t.footer.quickLinks}>
+          <h3 className="mb-5 text-lg font-black">{t.footer.quickLinks}</h3>
           <ul className="space-y-2.5">
-            {NAV_LINKS.map((link) => (
+            {t.nav.links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -74,10 +68,10 @@ export function Footer() {
         </nav>
 
         {/* services */}
-        <nav aria-label="خدماتنا">
-          <h3 className="mb-5 text-lg font-black">خدماتنا</h3>
+        <nav aria-label={t.footer.servicesTitle}>
+          <h3 className="mb-5 text-lg font-black">{t.footer.servicesTitle}</h3>
           <ul className="space-y-2.5">
-            {SERVICES.slice(0, 6).map((s) => (
+            {t.services.items.slice(0, 6).map((s) => (
               <li key={s.title}>
                 <a
                   href="#services"
@@ -93,7 +87,7 @@ export function Footer() {
 
         {/* contact */}
         <div>
-          <h3 className="mb-5 text-lg font-black">تواصل معنا</h3>
+          <h3 className="mb-5 text-lg font-black">{t.footer.contactTitle}</h3>
           <div className="space-y-4 text-sm">
             <a
               href={`tel:${PHONES[0].intl}`}
@@ -106,7 +100,7 @@ export function Footer() {
             </a>
             <p className="flex items-start gap-3 text-white/60">
               <MapPin className="mt-0.5 size-4.5 shrink-0 text-brand-bright" />
-              <span className="leading-relaxed">{ADDRESS}</span>
+              <span className="leading-relaxed">{t.meta.address}</span>
             </p>
           </div>
         </div>
@@ -115,10 +109,10 @@ export function Footer() {
       {/* bottom bar */}
       <div className="border-t border-white/10">
         <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-center text-xs text-white/45 sm:flex-row sm:text-start">
-          <p>© {year} سيجما سيف للمقاولات العامة — جميع الحقوق محفوظة</p>
-          <p className="font-mono tracking-wider">
-            SIGMA SAFE — Fire Fighting & Alarm Systems
+          <p>
+            © {year} {t.meta.brandTagline} — {t.footer.rights}
           </p>
+          <p className="font-mono tracking-wider">{t.footer.bottomEn}</p>
         </div>
       </div>
     </footer>
@@ -129,18 +123,17 @@ function SocialLink({
   href,
   label,
   icon,
-  external,
 }: {
   href: string;
   label: string;
   icon: React.ReactNode;
-  external?: boolean;
 }) {
   return (
     <a
       href={href}
       aria-label={label}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      target="_blank"
+      rel="noopener noreferrer"
       className="flex size-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-all hover:-translate-y-1 hover:border-brand hover:bg-brand hover:text-white"
     >
       {icon}

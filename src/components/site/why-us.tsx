@@ -2,22 +2,19 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2, Headset, ShieldCheck, Sparkles, Timer } from "lucide-react";
+import { useLanguage } from "@/components/site/language-provider";
 import {
   Reveal,
   SectionHeading,
   StaggerContainer,
   StaggerItem,
 } from "@/components/site/primitives";
-import { WHY_POINTS } from "@/lib/site";
 
-const MINI_BADGES = [
-  { icon: Headset, label: "دعم فني مستمر" },
-  { icon: Sparkles, label: "حلول متكاملة" },
-  { icon: ShieldCheck, label: "فريق متخصص" },
-  { icon: Timer, label: "خبرة واسعة" },
-];
+const MINI_BADGE_ICONS = [Headset, Sparkles, ShieldCheck, Timer];
 
 export function WhyUs() {
+  const { t } = useLanguage();
+
   return (
     <section id="why" className="scroll-mt-20 bg-surface py-20 lg:py-28">
       <div className="container-site grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr]">
@@ -25,10 +22,10 @@ export function WhyUs() {
         <div className="lg:sticky lg:top-28">
           <SectionHeading
             align="start"
-            eyebrow="لماذا نحن؟"
-            title="خبرتك في الأمان"
-            highlight="مسؤوليتنا"
-            desc="نلتزم بتقديم أنظمة متكاملة تضمن السلامة والوقاية لحماية الأرواح والممتلكات وتحقيق بيئة عمل آمنة."
+            eyebrow={t.why.eyebrow}
+            title={t.why.title}
+            highlight={t.why.highlight}
+            desc={t.why.desc}
           />
 
           <Reveal delay={0.25}>
@@ -46,22 +43,25 @@ export function WhyUs() {
                   <ShieldCheck className="size-9" />
                 </motion.span>
                 <div>
-                  <p className="text-xl font-black">معتمدون من الحماية المدنية</p>
+                  <p className="text-xl font-black">{t.why.cardTitle}</p>
                   <p className="mt-1 text-sm text-white/60">
-                    جميع أعمالنا تستوفي اشتراطات الجهات الرقابية المصرية
+                    {t.why.cardSub}
                   </p>
                 </div>
               </div>
               <div className="relative mt-7 grid grid-cols-2 gap-3">
-                {MINI_BADGES.map((b) => (
-                  <div
-                    key={b.label}
-                    className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3.5 py-3"
-                  >
-                    <b.icon className="size-5 shrink-0 text-brand-bright" />
-                    <span className="text-sm font-bold">{b.label}</span>
-                  </div>
-                ))}
+                {t.why.miniBadges.map((label, i) => {
+                  const Icon = MINI_BADGE_ICONS[i];
+                  return (
+                    <div
+                      key={label}
+                      className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3.5 py-3"
+                    >
+                      <Icon className="size-5 shrink-0 text-brand-bright" />
+                      <span className="text-sm font-bold">{label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </Reveal>
@@ -69,7 +69,7 @@ export function WhyUs() {
 
         {/* right: reasons */}
         <StaggerContainer className="space-y-4">
-          {WHY_POINTS.map((point, i) => (
+          {t.why.points.map((point, i) => (
             <StaggerItem key={point.title}>
               <motion.div
                 whileHover={{ x: -6 }}

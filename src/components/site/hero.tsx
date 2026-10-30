@@ -1,11 +1,13 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowLeft, Award, Flame, Phone, ShieldCheck, Star } from "lucide-react";
+import { Award, Flame, Phone, ShieldCheck, Star } from "lucide-react";
 import Image from "next/image";
 import type { MouseEvent } from "react";
-import { Counter, WhatsAppIcon } from "@/components/site/primitives";
-import { PHONES, STATS, WHATSAPP_URL } from "@/lib/site";
+import { useLanguage } from "@/components/site/language-provider";
+import { Counter, DirArrow, WhatsAppIcon } from "@/components/site/primitives";
+import { PHONES, STATS } from "@/lib/site";
+import { whatsappUrl } from "@/lib/i18n";
 
 const easeOut = [0.21, 0.65, 0.35, 1] as const;
 
@@ -14,6 +16,7 @@ export function Hero() {
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 60, damping: 18 });
   const sy = useSpring(my, { stiffness: 60, damping: 18 });
+  const { t, lang } = useLanguage();
 
   const imgX = useTransform(sx, [-0.5, 0.5], [-14, 14]);
   const imgY = useTransform(sy, [-0.5, 0.5], [-10, 10]);
@@ -31,7 +34,7 @@ export function Hero() {
       id="home"
       onPointerMove={onPointerMove}
       className="relative overflow-hidden bg-ink pt-[72px] text-white"
-      aria-label="المقدمة"
+      aria-label={t.hero.introAria}
     >
       {/* backdrop: grid + orbs + ribbons */}
       <div className="absolute inset-0 bg-grid-dark" aria-hidden="true" />
@@ -65,7 +68,7 @@ export function Hero() {
             className="inline-flex items-center gap-2.5 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-sm font-bold text-brand-bright backdrop-blur-sm"
           >
             <Award className="size-4" />
-            وكيل معتمد لأشهر الماركات العالمية
+            {t.hero.badge}
             <span className="flex gap-0.5 text-amber-400" aria-hidden="true">
               <Star className="size-3.5 fill-current" />
               <Star className="size-3.5 fill-current" />
@@ -74,21 +77,21 @@ export function Hero() {
           </motion.div>
 
           <h1 className="mt-6 text-4xl font-black leading-[1.3] sm:text-5xl lg:text-[3.4rem] lg:leading-[1.28]">
-            <Line delay={0.12}>نحمي منشأتك بأنظمة</Line>
+            <Line delay={0.12}>{t.hero.l1}</Line>
             <Line delay={0.24}>
               <span className="relative inline-block text-brand">
-                الإطفاء والإنذار
+                {t.hero.hl}
                 <motion.span
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 0.9, duration: 0.7, ease: easeOut }}
-                  className="absolute inset-x-0 -bottom-1 h-1.5 origin-right rounded-full bg-brand/70"
+                  className="absolute inset-x-0 -bottom-1 h-1.5 origin-left rounded-full bg-brand/70 rtl:origin-right"
                 />
               </span>{" "}
-              الأكثر موثوقية
+              {t.hero.l2b}
             </Line>
             <Line delay={0.36} className="text-white/90">
-              وفق أحدث الأكواد العالمية
+              {t.hero.l3}
             </Line>
           </h1>
 
@@ -98,9 +101,7 @@ export function Hero() {
             transition={{ delay: 0.5, duration: 0.6, ease: easeOut }}
             className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg lg:mx-0"
           >
-            سيجما سيف — تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار
-            ومهام الأمن الصناعي، بمعاينة فنية مجانية والتزام تام بمعايير
-            الجودة والسلامة.
+            {t.hero.desc}
           </motion.p>
 
           <motion.div
@@ -114,17 +115,17 @@ export function Hero() {
               className="group relative inline-flex h-13 items-center gap-2 overflow-hidden rounded-xl bg-brand px-7 py-3.5 text-base font-extrabold text-white shadow-xl shadow-brand/40 transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-brand/60"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-l from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              احصل على معاينة مجانية
-              <ArrowLeft className="size-5 transition-transform group-hover:-translate-x-1" />
+              {t.hero.ctaPrimary}
+              <DirArrow className="size-5 transition-transform" />
             </a>
             <a
-              href={WHATSAPP_URL}
+              href={whatsappUrl(lang)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-13 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 py-3.5 text-base font-extrabold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand/60 hover:bg-brand/15"
             >
               <WhatsAppIcon className="size-5 text-[#25D366]" />
-              واتساب فوري
+              {t.hero.ctaWhatsapp}
             </a>
           </motion.div>
 
@@ -139,7 +140,7 @@ export function Hero() {
             <span className="relative flex size-8 items-center justify-center rounded-full bg-brand/15 animate-siren">
               <Phone className="size-4 text-brand-bright" />
             </span>
-            اتصل بنا الآن:
+            {t.nav.callUs}
             <span dir="ltr" className="font-mono font-bold text-white">
               {PHONES[0].raw}
             </span>
@@ -152,9 +153,9 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 0.7, ease: easeOut }}
             className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4"
           >
-            {STATS.map((s) => (
+            {STATS.map((s, i) => (
               <div
-                key={s.label}
+                key={t.hero.stats[i]}
                 className="flex flex-col items-center gap-1 bg-ink/80 px-3 py-5 backdrop-blur-sm transition-colors hover:bg-brand/20"
               >
                 <Counter
@@ -163,7 +164,7 @@ export function Hero() {
                   className="font-mono text-2xl font-bold text-brand-bright sm:text-3xl"
                 />
                 <dt className="text-center text-xs font-semibold leading-4 text-white/60">
-                  {s.label}
+                  {t.hero.stats[i]}
                 </dt>
               </div>
             ))}
@@ -184,7 +185,7 @@ export function Hero() {
           >
             <Image
               src="/images/machine-diesel.jpg"
-              alt="وحدة ضخ حريق ديزل من تنفيذ سيجما سيف"
+              alt={t.misc.heroImgAlt}
               fill
               sizes="(max-width: 1024px) 90vw, 480px"
               className="object-cover"
@@ -197,8 +198,8 @@ export function Hero() {
                 <Flame className="size-5" />
               </span>
               <div className="text-sm">
-                <p className="font-extrabold">وحدات ضخ حريق كاملة</p>
-                <p className="text-white/60">توريد • تركيب • اختبار • صيانة</p>
+                <p className="font-extrabold">{t.hero.captionTitle}</p>
+                <p className="text-white/60">{t.hero.captionSub}</p>
               </div>
             </div>
           </motion.div>
@@ -213,9 +214,9 @@ export function Hero() {
                 <ShieldCheck className="size-6" />
               </span>
               <div>
-                <p className="text-sm font-extrabold">معتمدون من</p>
+                <p className="text-sm font-extrabold">{t.hero.float1Title}</p>
                 <p className="text-sm font-extrabold text-brand-bright">
-                  الحماية المدنية
+                  {t.hero.float1Sub}
                 </p>
               </div>
             </div>
@@ -233,9 +234,10 @@ export function Hero() {
                 ))}
               </div>
               <p className="mt-1.5 text-sm font-bold">
-                جودة <span className="text-brand-bright">بلا حدود</span>
+                {t.hero.float2Title}{" "}
+                <span className="text-brand-bright">{t.hero.float2Sub}</span>
               </p>
-              <p className="text-xs text-white/55">وفق أكواد NFPA العالمية</p>
+              <p className="text-xs text-white/55">{t.hero.float2Note}</p>
             </div>
           </motion.div>
 
@@ -252,13 +254,13 @@ export function Hero() {
       {/* scroll cue */}
       <motion.a
         href="#about"
-        aria-label="مرر للأسفل"
+        aria-label={t.hero.scrollAria}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/50 transition-colors hover:text-white lg:flex"
       >
-        <span className="text-xs font-bold">اكتشف المزيد</span>
+        <span className="text-xs font-bold">{t.hero.scrollCue}</span>
         <span className="flex h-9 w-5.5 items-start justify-center rounded-full border-2 border-current p-1">
           <motion.span
             animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}

@@ -1,17 +1,20 @@
 "use client";
 
 import { PARTNERS } from "@/lib/site";
+import { useLanguage } from "@/components/site/language-provider";
 
 export function Partners() {
   const row = [...PARTNERS, ...PARTNERS];
+  const { t } = useLanguage();
+
   return (
     <section
-      aria-label="شركاؤنا والوكالات"
+      aria-label={t.partners.aria}
       className="relative border-y border-border bg-surface py-8"
     >
       <div className="container-site">
         <p className="mb-6 text-center text-sm font-bold tracking-wide text-muted-foreground">
-          وكيل معتمد لماركات عالمية رائدة في تقنيات الحريق والأمان
+          {t.partners.note}
         </p>
       </div>
       {/* marquee — ltr wrapper keeps the translate math simple */}

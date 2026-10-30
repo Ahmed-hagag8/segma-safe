@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,13 +19,14 @@ export function ThemeToggle({
   className?: string;
 }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const { t } = useLanguage();
 
   return (
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      aria-label="تبديل الوضع الداكن / الفاتح"
-      title="الوضع الداكن / الفاتح"
+      aria-label={t.misc.themeToggle}
+      title={t.misc.themeToggle}
       className={cn(
         "group relative inline-flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors",
         scrolled

@@ -10,7 +10,7 @@ import {
   Phone,
   Send,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -23,32 +23,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/components/site/language-provider";
 import {
   Reveal,
   SectionHeading,
   WhatsAppIcon,
 } from "@/components/site/primitives";
-import {
-  ADDRESS,
-  PHONES,
-  SERVICE_OPTIONS,
-  WHATSAPP_URL,
-} from "@/lib/site";
-
-const schema = z.object({
-  name: z.string().min(2, "من فضلك أدخل الاسم بالكامل"),
-  phone: z
-    .string()
-    .regex(/^[0-9+\s-]{9,15}$/, "رقم الهاتف غير صحيح"),
-  company: z.string().optional(),
-  service: z.string().optional(),
-  message: z.string().min(10, "من فضلك اكتب تفاصيل أكثر عن احتياجك (10 أحرف على الأقل)"),
-});
-
-type FormData = z.infer<typeof schema>;
+import { PHONES } from "@/lib/site";
+import { whatsappUrl } from "@/lib/i18n";
 
 export function Contact() {
-  const [service, setService] = useState<string>("");
+  const [serviceIdx, setServiceIdx] = useState<string>("");
+  const { t, lang } = useLanguage();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t.contact.errName),
+        phone: z
+          .string()
+          .regex(/^[0-9+\s-]{9,15}$/, t.contact.errPhone),
+        company: z.string().optional(),
+        service: z.string().optional(),
+        message: z.string().min(10, t.contact.errMessage),
+      }),
+    [t]
+  );
+
+  type FormData = z.infer<typeof schema>;
+
   const {
     register,
     handleSubmit,
@@ -61,17 +64,23 @@ export function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, service }),
+        body: JSON.stringify({
+          ...data,
+          service:
+            serviceIdx === ""
+              ? ""
+              : t.contact.serviceOptions[Number(serviceIdx)],
+        }),
       });
       if (!res.ok) throw new Error("failed");
-      toast.success("تم إرسال طلبك بنجاح!", {
-        description: "سيتواصل معك فريقنا الفني في أقرب وقت — شكراً لثقتك في سيجما سيف.",
+      toast.success(t.contact.toastOk, {
+        description: t.contact.toastOkDesc,
       });
       reset();
-      setService("");
+      setServiceIdx("");
     } catch {
-      toast.error("تعذر إرسال الطلب", {
-        description: "من فضلك حاول مرة أخرى أو اتصل بنا مباشرة على أرقامنا.",
+      toast.error(t.contact.toastErr, {
+        description: t.contact.toastErrDesc,
       });
     }
   }
@@ -80,10 +89,10 @@ export function Contact() {
     <section id="contact" className="scroll-mt-20 bg-surface py-20 lg:py-28">
       <div className="container-site">
         <SectionHeading
-          eyebrow="تواصل معنا"
-          title="فريقنا جاهز"
-          highlight="لخدمتك الآن"
-          desc="أرسل طلبك وسيتواصل معك مهندسونا، أو اتصل مباشرة على خطوط الخدمة الأربعة."
+          eyebrow={t.contact.eyebrow}
+          title={t.contact.title}
+          highlight={t.contact.highlight}
+          desc={t.contact.desc}
         />
 
         <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.15fr]">
@@ -92,7 +101,7 @@ export function Contact() {
             <Reveal>
               <InfoCard
                 icon={<Phone className="size-6" />}
-                title="خطوط الخدمة المباشرة"
+                title={t.contact.linesTitle}
               >
                 <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                   {PHONES.map((p) => (
@@ -112,32 +121,32 @@ export function Contact() {
             <Reveal delay={0.1}>
               <InfoCard
                 icon={<WhatsAppIcon className="size-6 text-[#1da851]" />}
-                title="واتساب — رد فوري"
+                title={t.contact.waTitle}
               >
                 <a
-                  href={WHATSAPP_URL}
+                  href={whatsappUrl(lang)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#1da851]/10 px-4 py-2.5 text-sm font-extrabold text-[#147a3d] transition-all hover:-translate-y-0.5 hover:bg-[#1da851] hover:text-white dark:text-[#4ade80]"
                 >
                   <WhatsAppIcon className="size-5" />
-                  اضغط لبدء المحادثة
+                  {t.contact.waCta}
                 </a>
               </InfoCard>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <InfoCard icon={<MapPin className="size-6" />} title="المقر الرئيسي">
-                <p className="leading-relaxed text-muted-foreground">{ADDRESS}</p>
+              <InfoCard icon={<MapPin className="size-6" />} title={t.contact.addressTitle}>
+                <p className="leading-relaxed text-muted-foreground">{t.meta.address}</p>
               </InfoCard>
             </Reveal>
 
             <Reveal delay={0.3}>
-              <InfoCard icon={<Clock className="size-6" />} title="مواعيد العمل">
+              <InfoCard icon={<Clock className="size-6" />} title={t.contact.hoursTitle}>
                 <p className="text-muted-foreground">
-                  السبت — الخميس: 9 صباحاً حتى 6 مساءً
+                  {t.contact.hoursBody}
                   <span className="mx-2 font-bold text-brand">•</span>
-                  طوارئ على مدار الساعة عبر واتساب
+                  {t.contact.hoursEmergency}
                 </p>
               </InfoCard>
             </Reveal>
@@ -155,22 +164,23 @@ export function Contact() {
                 aria-hidden="true"
               />
               <h3 className="text-2xl font-black text-foreground">
-                اطلب <span className="text-brand">معاينة مجانية</span>
+                {t.contact.formTitle}{" "}
+                <span className="text-brand">{t.contact.formHighlight}</span>
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                املأ البيانات وسيتواصل معك مهندس مختص لتحديد موعد الزيارة.
+                {t.contact.formSub}
               </p>
 
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
-                <Field label="الاسم بالكامل *" error={errors.name?.message}>
+                <Field label={t.contact.nameLabel} error={errors.name?.message}>
                   <Input
                     {...register("name")}
-                    placeholder="مثال: م. أحمد محمد"
+                    placeholder={t.contact.namePh}
                     className="h-12 rounded-xl bg-surface"
                     aria-invalid={!!errors.name}
                   />
                 </Field>
-                <Field label="رقم الهاتف *" error={errors.phone?.message}>
+                <Field label={t.contact.phoneLabel} error={errors.phone?.message}>
                   <Input
                     {...register("phone")}
                     type="tel"
@@ -181,22 +191,25 @@ export function Contact() {
                     aria-invalid={!!errors.phone}
                   />
                 </Field>
-                <Field label="اسم المنشأة / الشركة" error={errors.company?.message}>
+                <Field label={t.contact.companyLabel} error={errors.company?.message}>
                   <Input
                     {...register("company")}
-                    placeholder="اختياري"
+                    placeholder={t.contact.companyPh}
                     className="h-12 rounded-xl bg-surface"
                   />
                 </Field>
-                <Field label="نوع الخدمة المطلوبة">
-                  <input type="hidden" {...register("service")} />
-                  <Select value={service} onValueChange={setService}>
+                <Field label={t.contact.serviceLabel}>
+                  <Select
+                    value={serviceIdx}
+                    onValueChange={setServiceIdx}
+                    dir={lang === "ar" ? "rtl" : "ltr"}
+                  >
                     <SelectTrigger className="h-12 w-full rounded-xl bg-surface text-[15px]">
-                      <SelectValue placeholder="اختر الخدمة المناسبة" />
+                      <SelectValue placeholder={t.contact.servicePh} />
                     </SelectTrigger>
                     <SelectContent>
-                      {SERVICE_OPTIONS.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
+                      {t.contact.serviceOptions.map((opt, i) => (
+                        <SelectItem key={opt} value={String(i)}>
                           {opt}
                         </SelectItem>
                       ))}
@@ -204,11 +217,11 @@ export function Contact() {
                   </Select>
                 </Field>
                 <div className="sm:col-span-2">
-                  <Field label="تفاصيل الطلب *" error={errors.message?.message}>
+                  <Field label={t.contact.messageLabel} error={errors.message?.message}>
                     <Textarea
                       {...register("message")}
                       rows={4}
-                      placeholder="اكتب لنا عن منشأتك ونوع النظام المطلوب (مساحة تقريبية، عدد الأدوار…)"
+                      placeholder={t.contact.messagePh}
                       className="resize-none rounded-xl bg-surface"
                       aria-invalid={!!errors.message}
                     />
@@ -227,19 +240,19 @@ export function Contact() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="size-5 animate-spin" />
-                    جارٍ الإرسال…
+                    {t.contact.submitting}
                   </>
                 ) : (
                   <>
-                    <Send className="size-5 -scale-x-100" />
-                    أرسل الطلب الآن
+                    <Send className="size-5 rtl:-scale-x-100" />
+                    {t.contact.submit}
                   </>
                 )}
               </motion.button>
 
               <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-muted-foreground">
                 <CheckCircle2 className="size-4 text-brand" />
-                بياناتك محفوظة بسرية تامة ولن تُستخدم إلا للتواصل معك
+                {t.contact.privacy}
               </p>
             </form>
           </Reveal>

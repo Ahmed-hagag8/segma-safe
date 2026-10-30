@@ -4,15 +4,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Expand, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { useLanguage } from "@/components/site/language-provider";
 import {
   SectionHeading,
   StaggerContainer,
   StaggerItem,
 } from "@/components/site/primitives";
-import { GALLERY } from "@/lib/site";
+import { GALLERY_IMAGES } from "@/lib/site";
 
 export function Gallery() {
   const [active, setActive] = useState<number | null>(null);
+  const { t } = useLanguage();
 
   return (
     <section
@@ -21,15 +23,15 @@ export function Gallery() {
     >
       <div className="container-site">
         <SectionHeading
-          eyebrow="أعمالنا"
-          title="من تنفيذنا بأيدينا"
-          highlight="…جودة تشوفها"
-          desc="نماذج حقيقية من وحدات الضخ ولوحات التحكم وشبكات الحريق التي جهزناها وركبناها."
+          eyebrow={t.gallery.eyebrow}
+          title={t.gallery.title}
+          highlight={t.gallery.highlight}
+          desc={t.gallery.desc}
         />
 
         <StaggerContainer className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {GALLERY.map((item, i) => (
-            <StaggerItem key={item.src} className={i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}>
+          {t.gallery.items.map((item, i) => (
+            <StaggerItem key={item.title} className={i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}>
               <motion.button
                 type="button"
                 onClick={() => setActive(i)}
@@ -37,7 +39,7 @@ export function Gallery() {
                 initial="rest"
                 animate="rest"
                 className="group relative block w-full overflow-hidden rounded-3xl text-start shadow-md shadow-ink/10 focus-visible:outline-2 focus-visible:outline-brand"
-                aria-label={`عرض ${item.title} بحجم أكبر`}
+                aria-label={t.gallery.viewAria(item.title)}
               >
                 <motion.div
                   variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
@@ -45,7 +47,7 @@ export function Gallery() {
                   className="relative aspect-[4/3] w-full"
                 >
                   <Image
-                    src={item.src}
+                    src={GALLERY_IMAGES[i]}
                     alt={`${item.title} — ${item.desc}`}
                     fill
                     sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
@@ -92,7 +94,7 @@ export function Gallery() {
             onClick={() => setActive(null)}
             role="dialog"
             aria-modal="true"
-            aria-label={GALLERY[active].title}
+            aria-label={t.gallery.items[active].title}
           >
             <motion.figure
               initial={{ scale: 0.9, y: 24 }}
@@ -104,8 +106,8 @@ export function Gallery() {
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
                 <Image
-                  src={GALLERY[active].src}
-                  alt={`${GALLERY[active].title} — ${GALLERY[active].desc}`}
+                  src={GALLERY_IMAGES[active]}
+                  alt={`${t.gallery.items[active].title} — ${t.gallery.items[active].desc}`}
                   fill
                   sizes="(max-width: 1024px) 92vw, 880px"
                   className="object-cover"
@@ -113,17 +115,17 @@ export function Gallery() {
               </div>
               <figcaption className="mt-4 text-center">
                 <span className="text-lg font-black text-white">
-                  {GALLERY[active].title}
+                  {t.gallery.items[active].title}
                 </span>
                 <span className="mt-1 block text-sm text-white/60">
-                  {GALLERY[active].desc}
+                  {t.gallery.items[active].desc}
                 </span>
               </figcaption>
 
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                aria-label="إغلاق العرض"
+                aria-label={t.gallery.closeAria}
                 className="absolute -top-3 end-0 flex size-11 -translate-y-full items-center justify-center rounded-xl bg-white text-ink shadow-lg transition-transform hover:scale-110"
               >
                 <X className="size-6" />

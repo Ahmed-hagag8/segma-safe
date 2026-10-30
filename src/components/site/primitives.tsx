@@ -1,8 +1,25 @@
 "use client";
 
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
+import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
+
+/* ───────────────  Direction-aware arrow (← in RTL, → in LTR)  ─────────────── */
+
+export function DirArrow({
+  className,
+  hoverShift = "rtl:group-hover:-translate-x-1 ltr:group-hover:translate-x-1",
+}: {
+  className?: string;
+  /** shift applied on group hover, direction-aware */
+  hoverShift?: string;
+}) {
+  const { dir } = useLanguage();
+  const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
+  return <Arrow aria-hidden="true" className={cn(className, hoverShift)} />;
+}
 
 /* ───────────────  Reveal: scroll-triggered entrance  ─────────────── */
 

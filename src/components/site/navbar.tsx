@@ -4,14 +4,17 @@ import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { NAV_LINKS, PHONES } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { LangToggle } from "@/components/site/lang-toggle";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { useLanguage } from "@/components/site/language-provider";
+import { PHONES } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
+  const { t } = useLanguage();
 
   useEffect(() => scrollY.on("change", (v) => setScrolled(v > 40)), [scrollY]);
 
@@ -37,11 +40,11 @@ export function Navbar() {
     >
       <div className="container-site flex h-[72px] items-center justify-between gap-4">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-3 shrink-0" aria-label="سيجما سيف — الرئيسية">
+        <a href="#home" className="flex items-center gap-3 shrink-0" aria-label={t.nav.homeAria}>
           <span className="relative block size-12 overflow-hidden rounded-xl bg-white ring-1 ring-black/10 shadow-sm">
             <Image
               src="/images/logo.jpg"
-              alt="شعار سيجما سيف SIGMA SAFE"
+              alt={t.footer.logoAlt}
               fill
               sizes="48px"
               className="object-cover"
@@ -63,14 +66,14 @@ export function Navbar() {
                 scrolled ? "text-muted-foreground" : "text-white/70"
               )}
             >
-              سيجما سيف للمقاولات العامة
+              {t.meta.brandTagline}
             </span>
           </span>
         </a>
 
         {/* Desktop links */}
-        <nav className="hidden lg:flex items-center gap-1" aria-label="التنقل الرئيسي">
-          {NAV_LINKS.map((link) => (
+        <nav className="hidden lg:flex items-center gap-1" aria-label={t.nav.mainNav}>
+          {t.nav.links.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -88,7 +91,7 @@ export function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        <div className="hidden lg:flex items-center gap-2.5 shrink-0">
           <a
             href={`tel:${PHONES[0].intl}`}
             className={cn(
@@ -99,13 +102,14 @@ export function Navbar() {
             <Phone className="size-4 text-brand" />
             <span dir="ltr" className="font-mono">{PHONES[0].raw}</span>
           </a>
+          <LangToggle scrolled={scrolled} />
           <ThemeToggle scrolled={scrolled} />
           <a
             href="#contact"
             className="group relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-xl bg-brand px-5 text-sm font-extrabold text-white shadow-lg shadow-brand/30 transition-all hover:bg-brand-dark hover:shadow-brand/50 hover:-translate-y-0.5"
           >
             <span className="absolute inset-0 -translate-x-full bg-gradient-to-l from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            معاينة مجانية
+            {t.nav.freeSurvey}
           </a>
         </div>
 
@@ -113,7 +117,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "إغلاق القائمة" : "فتح القائمة"}
+          aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={open}
           className={cn(
             "lg:hidden inline-flex size-11 items-center justify-center rounded-xl transition-colors",
@@ -135,10 +139,10 @@ export function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.32, ease: "easeInOut" }}
             className="lg:hidden overflow-hidden border-t border-border bg-background/97 backdrop-blur-xl"
-            aria-label="قائمة الجوال"
+            aria-label={t.nav.mobileNav}
           >
             <div className="container-site flex max-h-[calc(100dvh-72px)] flex-col gap-1 py-4 overflow-y-auto">
-              {NAV_LINKS.map((link, i) => (
+              {t.nav.links.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
@@ -151,17 +155,20 @@ export function Navbar() {
                   {link.label}
                 </motion.a>
               ))}
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <ThemeToggle scrolled />
+              <div className="mt-3 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <LangToggle scrolled />
+                  <ThemeToggle scrolled />
+                </div>
                 <motion.a
                   href="#contact"
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35 }}
-                  className="inline-flex h-12 flex-1 items-center justify-center rounded-xl bg-brand text-base font-extrabold text-white shadow-lg shadow-brand/30"
+                  className="inline-flex h-12 flex-1 items-center justify-center rounded-xl bg-brand px-3 text-sm font-extrabold text-white shadow-lg shadow-brand/30"
                 >
-                  احصل على معاينة مجانية
+                  {t.nav.freeSurveyLong}
                 </motion.a>
               </div>
             </div>

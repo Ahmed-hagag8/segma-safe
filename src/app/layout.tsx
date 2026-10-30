@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Cairo, Geist_Mono } from "next/font/google";
+import { Cairo, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+import { AppToaster } from "@/components/site/app-toaster";
+import { LanguageProvider } from "@/components/site/language-provider";
 
 const cairo = Cairo({
   variable: "--font-cairo",
@@ -13,6 +14,12 @@ const cairo = Cairo({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -69,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body
-        className={`${cairo.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${cairo.variable} ${geistMono.variable} ${inter.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
@@ -77,15 +84,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <SonnerToaster
-            position="bottom-center"
-            richColors
-            closeButton
-            toastOptions={{
-              style: { fontFamily: "var(--font-cairo)", direction: "rtl" },
-            }}
-          />
+          <LanguageProvider>
+            {children}
+            <AppToaster />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

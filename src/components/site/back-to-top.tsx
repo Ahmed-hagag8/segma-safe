@@ -3,10 +3,12 @@
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/site/language-provider";
 
 export function BackToTop() {
   const [show, setShow] = useState(false);
   const { scrollY } = useScroll();
+  const { t } = useLanguage();
 
   useEffect(() => scrollY.on("change", (v) => setShow(v > 600)), [scrollY]);
 
@@ -15,7 +17,7 @@ export function BackToTop() {
       {show && (
         <motion.a
           href="#home"
-          aria-label="العودة للأعلى"
+          aria-label={t.misc.backToTop}
           initial={{ opacity: 0, y: 24, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 24, scale: 0.8 }}
