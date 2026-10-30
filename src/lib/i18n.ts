@@ -52,7 +52,6 @@ const ar = {
     float2Title: "جودة",
     float2Sub: "بلا حدود",
     float2Note: "وفق أكواد NFPA العالمية",
-    scrollCue: "اكتشف المزيد",
     scrollAria: "مرر للأسفل",
     introAria: "المقدمة",
     stats: [
@@ -366,7 +365,6 @@ const en: Dict = {
     float2Title: "Limitless",
     float2Sub: "Quality",
     float2Note: "Per NFPA international codes",
-    scrollCue: "Discover more",
     scrollAria: "Scroll down",
     introAria: "Introduction",
     stats: [

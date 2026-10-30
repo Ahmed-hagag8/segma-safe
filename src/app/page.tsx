@@ -6,6 +6,7 @@ import { CtaBand } from "@/components/site/cta-band";
 import { Footer } from "@/components/site/footer";
 import { Gallery } from "@/components/site/gallery";
 import { Hero } from "@/components/site/hero";
+import { LangRemount } from "@/components/site/lang-remount";
 import { Navbar } from "@/components/site/navbar";
 import { Partners } from "@/components/site/partners";
 import { Process } from "@/components/site/process";
@@ -46,18 +47,22 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <Partners />
-        <About />
-        <Services />
-        <WhyUs />
-        <Process />
-        <Gallery />
-        <Clients />
-        <CtaBand />
-        <Contact />
-      </main>
+      {/* remounts on user-initiated AR↔EN switch so every scroll-reveal
+          section re-evaluates its in-view state (no blank sections) */}
+      <LangRemount>
+        <main className="flex-1">
+          <Hero />
+          <Partners />
+          <About />
+          <Services />
+          <WhyUs />
+          <Process />
+          <Gallery />
+          <Clients />
+          <CtaBand />
+          <Contact />
+        </main>
+      </LangRemount>
       <Footer />
       <BackToTop />
     </div>

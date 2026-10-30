@@ -250,25 +250,6 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
-
-      {/* scroll cue */}
-      <motion.a
-        href="#about"
-        aria-label={t.hero.scrollAria}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/50 transition-colors hover:text-white lg:flex"
-      >
-        <span className="text-xs font-bold">{t.hero.scrollCue}</span>
-        <span className="flex h-9 w-5.5 items-start justify-center rounded-full border-2 border-current p-1">
-          <motion.span
-            animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="size-1.5 rounded-full bg-brand-bright"
-          />
-        </span>
-      </motion.a>
     </section>
   );
 }
