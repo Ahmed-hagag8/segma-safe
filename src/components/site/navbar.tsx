@@ -38,7 +38,7 @@ export function Navbar() {
           : "bg-transparent"
       )}
     >
-      <div className="container-site flex h-[72px] items-center justify-between gap-4">
+      <div className="container-fluid flex h-[72px] items-center justify-between gap-4">
         {/* Logo */}
         <a href="#home" className="flex items-center gap-3 shrink-0" aria-label={t.nav.homeAria}>
           <span className="relative block size-12 overflow-hidden rounded-xl bg-white ring-1 ring-black/10 shadow-sm">
@@ -141,7 +141,7 @@ export function Navbar() {
             className="lg:hidden overflow-hidden border-t border-border bg-background/97 backdrop-blur-xl"
             aria-label={t.nav.mobileNav}
           >
-            <div className="container-site flex max-h-[calc(100dvh-72px)] flex-col gap-1 py-4 overflow-y-auto">
+            <div className="container-fluid flex max-h-[calc(100dvh-72px)] flex-col gap-1 py-4 overflow-y-auto">
               {t.nav.links.map((link, i) => (
                 <motion.a
                   key={link.href}

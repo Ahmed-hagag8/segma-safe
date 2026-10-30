@@ -163,6 +163,19 @@
   }
 }
 
+/* full-bleed container — same gutters as container-site, no max-width cap
+   (used by the navbar so it spans the entire viewport width on desktop) */
+@utility container-fluid {
+  width: 100%;
+  padding-inline: 1.25rem;
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 2.5rem;
+  }
+}
+
 /* scrollbars fully hidden (all elements, all themes) — scrolling stays functional */
 ::-webkit-scrollbar {
   width: 0;
