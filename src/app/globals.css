@@ -1,0 +1,248 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-cairo);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── Sigma Safe brand palette (from logo) ── */
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-bright: var(--brand-bright);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-surface: var(--surface);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Brand — sampled from the SIGMA SAFE logo */
+  --brand: #d31017;          /* signature red */
+  --brand-dark: #9e0b10;     /* deep red (shadows / hover) */
+  --brand-bright: #f43f3f;   /* glow / highlight red */
+  --ink: #141416;            /* near-black (logo black) */
+  --charcoal: #232327;       /* elevated black surfaces */
+  --surface: #f6f6f7;        /* light neutral surface */
+
+  /* shadcn tokens mapped to brand */
+  --background: #ffffff;
+  --foreground: #141416;
+  --card: #ffffff;
+  --card-foreground: #141416;
+  --popover: #ffffff;
+  --popover-foreground: #141416;
+  --primary: #d31017;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f6f7;
+  --secondary-foreground: #141416;
+  --muted: #f6f6f7;
+  --muted-foreground: #6b6b70;
+  --accent: #fdecec;
+  --accent-foreground: #9e0b10;
+  --destructive: #b40f14;
+  --border: #e8e8ea;
+  --input: #e8e8ea;
+  --ring: #d31017;
+  --chart-1: #d31017;
+  --chart-2: #141416;
+  --chart-3: #f43f3f;
+  --chart-4: #6b6b70;
+  --chart-5: #9e0b10;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #141416;
+  --sidebar-primary: #d31017;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f6f6f7;
+  --sidebar-accent-foreground: #141416;
+  --sidebar-border: #e8e8ea;
+  --sidebar-ring: #d31017;
+}
+
+.dark {
+  --background: #141416;
+  --foreground: #f6f6f7;
+  --card: #1e1e21;
+  --card-foreground: #f6f6f7;
+  --popover: #1e1e21;
+  --popover-foreground: #f6f6f7;
+  --primary: #f43f3f;
+  --primary-foreground: #ffffff;
+  --secondary: #232327;
+  --secondary-foreground: #f6f6f7;
+  --muted: #232327;
+  --muted-foreground: #a8a8ad;
+  --accent: #2a1517;
+  --accent-foreground: #f43f3f;
+  --destructive: #f43f3f;
+  --border: #2c2c30;
+  --input: #2c2c30;
+  --ring: #f43f3f;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: #d31017;
+    color: #ffffff;
+  }
+}
+
+/* ─────────────────────────  Utilities  ───────────────────────── */
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+}
+
+/* thin styled scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f2;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d31017, #9e0b10);
+  border-radius: 8px;
+  border: 2px solid #f1f1f2;
+}
+
+/* ── Keyframes ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(40px, -30px) scale(1.08); }
+  66%      { transform: translate(-30px, 25px) scale(0.95); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+@keyframes siren-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 63, 0.55); }
+  50%      { box-shadow: 0 0 28px 6px rgba(244, 63, 63, 0.35); }
+}
+
+@utility animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+@utility animate-float-y {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@utility animate-orb {
+  animation: orb-drift 14s ease-in-out infinite;
+}
+
+@utility animate-siren {
+  animation: siren-glow 2.4s ease-in-out infinite;
+}
+
+@utility text-shimmer {
+  background: linear-gradient(110deg, #ffffff 40%, #f43f3f 50%, #ffffff 60%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* diagonal brand ribbons (echo the logo geometry) */
+@utility ribbon-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 18%, 0 100%);
+}
+
+/* subtle blueprint grid used on dark hero */
+@utility bg-grid-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@utility bg-dots-light {
+  background-image: radial-gradient(rgba(20, 20, 22, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

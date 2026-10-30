@@ -1,0 +1,64 @@
+import { About } from "@/components/site/about";
+import { BackToTop } from "@/components/site/back-to-top";
+import { Clients } from "@/components/site/clients";
+import { Contact } from "@/components/site/contact";
+import { CtaBand } from "@/components/site/cta-band";
+import { Footer } from "@/components/site/footer";
+import { Gallery } from "@/components/site/gallery";
+import { Hero } from "@/components/site/hero";
+import { Navbar } from "@/components/site/navbar";
+import { Partners } from "@/components/site/partners";
+import { Process } from "@/components/site/process";
+import { Services } from "@/components/site/services";
+import { WhyUs } from "@/components/site/why-us";
+import { ADDRESS, COMPANY_FULL_AR, PHONES } from "@/lib/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "سيجما سيف للمقاولات العامة — SIGMA SAFE",
+  alternateName: "Sigma Safe General Contracting",
+  description: COMPANY_FULL_AR,
+  telephone: PHONES.map((p) => p.intl),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "العجوزة، عمارات الإعلام، عمارة 1، الدور الخامس",
+    addressLocality: "الجيزة",
+    addressCountry: "EG",
+  },
+  areaServed: "EG",
+  knowsAbout: [
+    "أنظمة الإطفاء",
+    "أنظمة الإنذار",
+    "FM200",
+    "CO2",
+    "Foam Systems",
+    "Fire Pumps",
+  ],
+};
+
+export default function Home() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Navbar />
+      <main className="flex-1">
+        <Hero />
+        <Partners />
+        <About />
+        <Services />
+        <WhyUs />
+        <Process />
+        <Gallery />
+        <Clients />
+        <CtaBand />
+        <Contact />
+      </main>
+      <Footer />
+      <BackToTop />
+    </div>
+  );
+}
