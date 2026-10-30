@@ -28,8 +28,6 @@ export const WHATSAPP_URL =
   "https://wa.me/201039661221?text=" +
   encodeURIComponent("مرحباً سيجما سيف، أرغب في معاينة فنية لمنشأتي");
 
-export const FACEBOOK_URL = "https://www.facebook.com/share/1Etsno3VRa/";
-
 export const ADDRESS =
   "الجيزة — العجوزة، عمارات الإعلام، عمارة 1، الدور الخامس";
 

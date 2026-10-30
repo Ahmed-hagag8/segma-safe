@@ -17,7 +17,7 @@ const HIGHLIGHTS = [
 
 export function About() {
   return (
-    <section id="about" className="scroll-mt-20 bg-white py-20 lg:py-28">
+    <section id="about" className="scroll-mt-20 bg-background py-20 lg:py-28">
       <div className="container-site grid items-center gap-14 lg:grid-cols-2">
         {/* visual collage */}
         <div className="relative mx-auto w-full max-w-[540px]">
@@ -33,7 +33,7 @@ export function About() {
             </div>
           </Reveal>
           <Reveal delay={0.2} className="absolute -bottom-10 end-2 w-[46%] sm:-end-6">
-            <div className="relative aspect-square overflow-hidden rounded-3xl border-4 border-white shadow-xl shadow-ink/25">
+            <div className="relative aspect-square overflow-hidden rounded-3xl border-4 border-background shadow-xl shadow-ink/25">
               <Image
                 src="/images/machine-assembly.jpg"
                 alt="تجميع واختبار لوحات التحكم"
@@ -77,7 +77,7 @@ export function About() {
               <StaggerItem key={h}>
                 <div className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 transition-all hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-lg hover:shadow-brand/10">
                   <CheckCircle2 className="mt-0.5 size-6 shrink-0 text-brand" />
-                  <p className="pt-0.5 font-bold text-ink">{h}</p>
+                  <p className="pt-0.5 font-bold text-foreground">{h}</p>
                 </div>
               </StaggerItem>
             ))}

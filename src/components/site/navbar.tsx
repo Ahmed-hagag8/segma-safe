@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NAV_LINKS, PHONES } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,7 +31,7 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(20,20,22,0.08)] border-b border-border"
+          ? "bg-background/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(20,20,22,0.08)] border-b border-border"
           : "bg-transparent"
       )}
     >
@@ -51,7 +52,7 @@ export function Navbar() {
             <span
               className={cn(
                 "font-mono text-lg font-bold tracking-wider transition-colors",
-                scrolled ? "text-ink" : "text-white"
+                scrolled ? "text-foreground" : "text-white"
               )}
             >
               SIGMA <span className="text-brand">SAFE</span>
@@ -76,7 +77,7 @@ export function Navbar() {
               className={cn(
                 "group relative rounded-lg px-3.5 py-2 text-[15px] font-bold transition-colors",
                 scrolled
-                  ? "text-ink/80 hover:text-brand"
+                  ? "text-foreground/80 hover:text-brand"
                   : "text-white/85 hover:text-white"
               )}
             >
@@ -92,12 +93,13 @@ export function Navbar() {
             href={`tel:${PHONES[0].intl}`}
             className={cn(
               "flex items-center gap-2 text-sm font-bold transition-colors",
-              scrolled ? "text-ink hover:text-brand" : "text-white/90 hover:text-white"
+              scrolled ? "text-foreground hover:text-brand" : "text-white/90 hover:text-white"
             )}
           >
             <Phone className="size-4 text-brand" />
             <span dir="ltr" className="font-mono">{PHONES[0].raw}</span>
           </a>
+          <ThemeToggle scrolled={scrolled} />
           <a
             href="#contact"
             className="group relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-xl bg-brand px-5 text-sm font-extrabold text-white shadow-lg shadow-brand/30 transition-all hover:bg-brand-dark hover:shadow-brand/50 hover:-translate-y-0.5"
@@ -116,7 +118,7 @@ export function Navbar() {
           className={cn(
             "lg:hidden inline-flex size-11 items-center justify-center rounded-xl transition-colors",
             scrolled
-              ? "text-ink hover:bg-muted"
+              ? "text-foreground hover:bg-muted"
               : "text-white hover:bg-white/10"
           )}
         >
@@ -132,7 +134,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.32, ease: "easeInOut" }}
-            className="lg:hidden overflow-hidden border-t border-border bg-white/97 backdrop-blur-xl"
+            className="lg:hidden overflow-hidden border-t border-border bg-background/97 backdrop-blur-xl"
             aria-label="قائمة الجوال"
           >
             <div className="container-site flex max-h-[calc(100dvh-72px)] flex-col gap-1 py-4 overflow-y-auto">
@@ -144,21 +146,24 @@ export function Navbar() {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.3 }}
-                  className="rounded-xl px-4 py-3.5 text-base font-bold text-ink hover:bg-accent hover:text-brand-dark transition-colors"
+                  className="rounded-xl px-4 py-3.5 text-base font-bold text-foreground hover:bg-accent hover:text-brand-dark dark:hover:text-brand-bright transition-colors"
                 >
                   {link.label}
                 </motion.a>
               ))}
-              <motion.a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 }}
-                className="mt-3 inline-flex h-12 items-center justify-center rounded-xl bg-brand text-base font-extrabold text-white shadow-lg shadow-brand/30"
-              >
-                احصل على معاينة مجانية
-              </motion.a>
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <ThemeToggle scrolled />
+                <motion.a
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="inline-flex h-12 flex-1 items-center justify-center rounded-xl bg-brand text-base font-extrabold text-white shadow-lg shadow-brand/30"
+                >
+                  احصل على معاينة مجانية
+                </motion.a>
+              </div>
             </div>
           </motion.nav>
         )}

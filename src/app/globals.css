@@ -115,6 +115,12 @@
   --border: #2c2c30;
   --input: #2c2c30;
   --ring: #f43f3f;
+
+  /* brand-adjacent surfaces re-mapped for the dark theme */
+  --ink: #1b1b1f;       /* dark panels sit slightly above the page bg */
+  --charcoal: #232327;  /* elevated dark surfaces */
+  --surface: #1a1a1d;   /* dark neutral section surface */
+  --brand: #e11d23;     /* a touch brighter so reds glow on dark */
 }
 
 @layer base {
@@ -123,11 +129,16 @@
   }
   html {
     scroll-behavior: smooth;
+    /* hide the scrollbar while keeping scrolling functional */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01";
     text-rendering: optimizeLegibility;
+    /* guard against any accidental horizontal (side) scrolling */
+    overflow-x: clip;
   }
   ::selection {
     background: #d31017;
@@ -147,18 +158,15 @@
   }
 }
 
-/* thin styled scrollbar */
+/* scrollbars fully hidden (all elements, all themes) — scrolling stays functional */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 8px;
+  width: 0;
+  height: 0;
+  display: none;
 }
-::-webkit-scrollbar-track {
-  background: #f1f1f2;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #d31017, #9e0b10);
-  border-radius: 8px;
-  border: 2px solid #f1f1f2;
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* ── Keyframes ── */
@@ -216,6 +224,15 @@
   background-clip: text;
   color: transparent;
   animation: shimmer 5s linear infinite;
+}
+
+/* light-mode dots pattern flips to faint white dots in dark mode */
+@utility bg-dots-light {
+  background-image: radial-gradient(rgba(20, 20, 22, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.dark .bg-dots-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
 }
 
 /* diagonal brand ribbons (echo the logo geometry) */

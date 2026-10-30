@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import {
   CheckCircle2,
   Clock,
-  Facebook,
   Loader2,
   MapPin,
   Phone,
@@ -31,7 +30,6 @@ import {
 } from "@/components/site/primitives";
 import {
   ADDRESS,
-  FACEBOOK_URL,
   PHONES,
   SERVICE_OPTIONS,
   WHATSAPP_URL,
@@ -101,7 +99,7 @@ export function Contact() {
                     <a
                       key={p.raw}
                       href={`tel:${p.intl}`}
-                      className="group inline-flex items-center gap-2 rounded-lg px-2 py-1.5 font-mono text-[15px] font-bold text-ink transition-colors hover:bg-accent hover:text-brand"
+                      className="group inline-flex items-center gap-2 rounded-lg px-2 py-1.5 font-mono text-[15px] font-bold text-foreground transition-colors hover:bg-accent hover:text-brand"
                     >
                       <Phone className="size-4 text-brand transition-transform group-hover:rotate-12" />
                       <span dir="ltr">{p.raw}</span>
@@ -120,7 +118,7 @@ export function Contact() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#1da851]/10 px-4 py-2.5 text-sm font-extrabold text-[#147a3d] transition-all hover:-translate-y-0.5 hover:bg-[#1da851] hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#1da851]/10 px-4 py-2.5 text-sm font-extrabold text-[#147a3d] transition-all hover:-translate-y-0.5 hover:bg-[#1da851] hover:text-white dark:text-[#4ade80]"
                 >
                   <WhatsAppIcon className="size-5" />
                   اضغط لبدء المحادثة
@@ -143,25 +141,6 @@ export function Contact() {
                 </p>
               </InfoCard>
             </Reveal>
-
-            <Reveal delay={0.4}>
-              <a
-                href={FACEBOOK_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-3xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-[#1877F2]/40 hover:shadow-lg"
-              >
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-[#1877F2]/10 text-[#1877F2] transition-colors group-hover:bg-[#1877F2] group-hover:text-white">
-                  <Facebook className="size-6" />
-                </span>
-                <div>
-                  <p className="font-extrabold text-ink">تابعنا على فيسبوك</p>
-                  <p className="text-sm text-muted-foreground">
-                    سيجما سيف للمقاولات العامة — آخر أعمالنا وعروضنا
-                  </p>
-                </div>
-              </a>
-            </Reveal>
           </div>
 
           {/* form column */}
@@ -169,13 +148,13 @@ export function Contact() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               noValidate
-              className="relative h-full overflow-hidden rounded-[2rem] border border-border bg-white p-7 shadow-xl shadow-ink/10 sm:p-9"
+              className="relative h-full overflow-hidden rounded-[2rem] border border-border bg-card p-7 shadow-xl shadow-ink/10 sm:p-9"
             >
               <span
                 className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-l from-brand via-brand-bright to-brand-dark"
                 aria-hidden="true"
               />
-              <h3 className="text-2xl font-black text-ink">
+              <h3 className="text-2xl font-black text-foreground">
                 اطلب <span className="text-brand">معاينة مجانية</span>
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -280,12 +259,12 @@ function InfoCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex gap-4 rounded-3xl border border-border bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10">
+    <div className="flex gap-4 rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10">
       <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-accent text-brand">
         {icon}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="font-extrabold text-ink">{title}</p>
+        <p className="font-extrabold text-foreground">{title}</p>
         <div className="mt-2 text-[15px]">{children}</div>
       </div>
     </div>
@@ -303,7 +282,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-bold text-ink">{label}</span>
+      <span className="mb-1.5 block text-sm font-bold text-foreground">{label}</span>
       {children}
       {error && <span className="mt-1.5 block text-xs font-bold text-brand">{error}</span>}
     </label>

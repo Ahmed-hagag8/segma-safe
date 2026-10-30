@@ -32,7 +32,7 @@ export function WhyUs() {
           />
 
           <Reveal delay={0.25}>
-            <div className="relative mt-10 overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-2xl shadow-ink/30">
+            <div className="relative mt-10 overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-2xl shadow-ink/30 dark:border dark:border-white/15">
               <div
                 className="absolute -end-16 -top-16 size-52 rounded-full bg-brand/30 blur-3xl"
                 aria-hidden="true"
@@ -74,13 +74,13 @@ export function WhyUs() {
               <motion.div
                 whileHover={{ x: -6 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="group flex gap-5 rounded-3xl border border-border bg-white p-6 shadow-sm transition-all hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10"
+                className="group flex gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10"
               >
                 <span className="relative flex size-13 shrink-0 items-center justify-center rounded-2xl bg-accent font-mono text-xl font-bold text-brand transition-colors group-hover:bg-brand group-hover:text-white">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="flex items-center gap-2 text-lg font-black text-ink">
+                  <h3 className="flex items-center gap-2 text-lg font-black text-foreground">
                     {point.title}
                   </h3>
                   <p className="mt-1.5 leading-relaxed text-muted-foreground">

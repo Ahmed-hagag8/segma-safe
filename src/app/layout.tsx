@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cairo, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 
 const cairo = Cairo({
@@ -70,15 +71,22 @@ export default function RootLayout({
       <body
         className={`${cairo.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
       >
-        {children}
-        <SonnerToaster
-          position="bottom-center"
-          richColors
-          closeButton
-          toastOptions={{
-            style: { fontFamily: "var(--font-cairo)", direction: "rtl" },
-          }}
-        />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <SonnerToaster
+            position="bottom-center"
+            richColors
+            closeButton
+            toastOptions={{
+              style: { fontFamily: "var(--font-cairo)", direction: "rtl" },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

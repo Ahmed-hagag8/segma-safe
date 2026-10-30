@@ -24,9 +24,9 @@ export function Partners() {
             <div
               key={`${brand}-${i}`}
               aria-hidden={i >= PARTNERS.length}
-              className="group flex h-16 min-w-[170px] items-center justify-center gap-2 rounded-2xl border border-border bg-white px-7 shadow-sm transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-brand/20"
+              className="group flex h-16 min-w-[170px] items-center justify-center gap-2 rounded-2xl border border-border bg-card px-7 shadow-sm transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-brand/20"
             >
-              <span className="font-mono text-xl font-bold tracking-wider text-ink/85 transition-colors group-hover:text-brand">
+              <span className="font-mono text-xl font-bold tracking-wider text-foreground/85 transition-colors group-hover:text-brand">
                 {brand}
               </span>
             </div>

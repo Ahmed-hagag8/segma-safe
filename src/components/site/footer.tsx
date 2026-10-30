@@ -2,14 +2,10 @@
 
 import { ArrowUp, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
-import {
-  FacebookIcon,
-  WhatsAppIcon,
-} from "@/components/site/primitives";
+import { WhatsAppIcon } from "@/components/site/primitives";
 import {
   ADDRESS,
   COMPANY_FULL_AR,
-  FACEBOOK_URL,
   NAV_LINKS,
   PHONES,
   SERVICES,
@@ -55,12 +51,6 @@ export function Footer() {
               label="واتساب"
               external
               icon={<WhatsAppIcon className="size-5" />}
-            />
-            <SocialLink
-              href={FACEBOOK_URL}
-              label="فيسبوك"
-              external
-              icon={<FacebookIcon className="size-5" />}
             />
           </div>
         </div>
