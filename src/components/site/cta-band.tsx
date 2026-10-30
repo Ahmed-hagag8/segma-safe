@@ -57,11 +57,11 @@ export function CtaBand() {
               {t.cta.whatsapp}
             </a>
             <a
-              href={`tel:${PHONES[1].intl}`}
+              href={`tel:${PHONES[0].intl}`}
               className="group inline-flex items-center gap-2.5 rounded-xl border-2 border-white/70 px-7 py-[14px] text-base font-extrabold text-white transition-all hover:-translate-y-1 hover:border-white hover:bg-white/10"
             >
               <Phone className="size-5 transition-transform group-hover:rotate-12" />
-              <span dir="ltr" className="font-mono">{PHONES[1].raw}</span>
+              <span dir="ltr" className="font-mono">{PHONES[0].raw}</span>
             </a>
           </div>
         </Reveal>

@@ -103,7 +103,7 @@ export function Contact() {
                 icon={<Phone className="size-6" />}
                 title={t.contact.linesTitle}
               >
-                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-1.5">
                   {PHONES.map((p) => (
                     <a
                       key={p.raw}

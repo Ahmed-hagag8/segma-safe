@@ -18,9 +18,6 @@ import {
 /* ─────────────────────────  Contact  ───────────────────────── */
 
 export const PHONES = [
-  { raw: "01039595147", intl: "+201039595147" },
-  { raw: "01557631769", intl: "+201557631769" },
-  { raw: "01039548487", intl: "+201039548487" },
   { raw: "01039661221", intl: "+201039661221" },
 ] as const;
 
@@ -45,7 +42,7 @@ export const STATS = [
   { value: 10, suffix: "+" },
   { value: 8, suffix: "" },
   { value: 5, suffix: "" },
-  { value: 4, suffix: "" },
+  { value: 2, suffix: "" }, // direct contact channels: phone + WhatsApp
 ] as const;
 
 /* ─────────────────────────  Service icons (order matches i18n items)  ── */

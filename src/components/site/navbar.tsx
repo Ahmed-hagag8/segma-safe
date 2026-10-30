@@ -1,13 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LangToggle } from "@/components/site/lang-toggle";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { useLanguage } from "@/components/site/language-provider";
-import { PHONES } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -82,16 +81,6 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-2.5 shrink-0">
-          <a
-            href={`tel:${PHONES[0].intl}`}
-            className={cn(
-              "flex items-center gap-2 text-sm font-bold transition-colors",
-              scrolled ? "text-foreground hover:text-brand" : "text-white/90 hover:text-white"
-            )}
-          >
-            <Phone className="size-4 text-brand" />
-            <span dir="ltr" className="font-mono">{PHONES[0].raw}</span>
-          </a>
           <LangToggle scrolled={scrolled} />
           <ThemeToggle scrolled={scrolled} />
           <a
