@@ -44,6 +44,7 @@ type RevealProps = {
   delay?: number;
   y?: number;
   x?: number;
+  blur?: boolean;
   once?: boolean;
 };
 

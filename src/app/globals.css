@@ -231,6 +231,34 @@
   animation: orb-drift 14s ease-in-out infinite;
 }
 
+/* ── Services "ignition" ── */
+/* registered so the conic gradient can animate smoothly */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ignite-rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* rotating ember gradient traced around a service card's border on hover */
+.ignite-ring {
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    transparent 248deg,
+    rgba(212, 16, 23, 0.85) 292deg,
+    rgba(244, 63, 63, 0.95) 318deg,
+    rgba(253, 186, 116, 0.95) 336deg,
+    transparent 352deg
+  );
+  animation: ignite-rotate 4.2s linear infinite;
+}
+
 @utility animate-siren {
   animation: siren-glow 2.4s ease-in-out infinite;
 }
