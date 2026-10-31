@@ -90,6 +90,7 @@ const ar = {
     highlight: "من أشهر الماركات العالمية",
     desc: "حلول شاملة «مفتاح في اليد» — من الدراسة والتصميم حتى التركيب والصيانة الدورية، بمعدات معتمدة من كبرى الشركات العالمية.",
     cta: "اطلب استشارة فنية مجانية",
+    scrollHint: "مرّر للتنقل بين الخدمات",
     items: [
       {
         title: "أنظمة الرشاشات الآلية",
@@ -408,6 +409,7 @@ const en: Dict = {
     highlight: "from the world's leading brands",
     desc: "Comprehensive turnkey solutions — from study and design through installation and periodic maintenance, with certified equipment from major global companies.",
     cta: "Request a free technical consultation",
+    scrollHint: "Scroll to move through the services",
     items: [
       {
         title: "Automatic Sprinkler Systems",
