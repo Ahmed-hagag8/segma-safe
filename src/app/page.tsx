@@ -10,6 +10,7 @@ import { LangRemount } from "@/components/site/lang-remount";
 import { Navbar } from "@/components/site/navbar";
 import { Partners } from "@/components/site/partners";
 import { Process } from "@/components/site/process";
+import { ScrollProgress } from "@/components/site/primitives";
 import { Services } from "@/components/site/services";
 import { WhyUs } from "@/components/site/why-us";
 import { PHONES } from "@/lib/site";
@@ -46,6 +47,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <ScrollProgress />
       <Navbar />
       {/* remounts on user-initiated AR↔EN switch so every scroll-reveal
           section re-evaluates its in-view state (no blank sections) */}

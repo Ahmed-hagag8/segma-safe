@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cairo, Geist_Mono, Inter } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppToaster } from "@/components/site/app-toaster";
@@ -92,10 +93,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider>
-            {children}
-            <AppToaster />
-          </LanguageProvider>
+          <MotionConfig reducedMotion="user">
+            <LanguageProvider>
+              {children}
+              <AppToaster />
+            </LanguageProvider>
+          </MotionConfig>
         </ThemeProvider>
       </body>
     </html>

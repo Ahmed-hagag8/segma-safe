@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { Award, Flame, Phone, ShieldCheck, Star } from "lucide-react";
 import Image from "next/image";
-import type { MouseEvent } from "react";
+import { useRef, type MouseEvent } from "react";
 import { useLanguage } from "@/components/site/language-provider";
-import { Counter, DirArrow, WhatsAppIcon } from "@/components/site/primitives";
+import { Counter, DirArrow, Magnetic, WhatsAppIcon } from "@/components/site/primitives";
 import { PHONES, STATS } from "@/lib/site";
 import { whatsappUrl } from "@/lib/i18n";
 
@@ -17,6 +17,14 @@ export function Hero() {
   const sx = useSpring(mx, { stiffness: 60, damping: 18 });
   const sy = useSpring(my, { stiffness: 60, damping: 18 });
   const { t, lang } = useLanguage();
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const exitY = useTransform(scrollYProgress, [0, 1], [0, 110]);
+  const exitOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const imgX = useTransform(sx, [-0.5, 0.5], [-14, 14]);
   const imgY = useTransform(sy, [-0.5, 0.5], [-10, 10]);
@@ -32,6 +40,7 @@ export function Hero() {
   return (
     <section
       id="home"
+      ref={sectionRef}
       onPointerMove={onPointerMove}
       className="relative overflow-hidden bg-ink pt-[72px] text-white"
       aria-label={t.hero.introAria}
@@ -58,7 +67,10 @@ export function Hero() {
       {/* floating embers */}
       <Embers />
 
-      <div className="container-site relative grid min-h-[calc(100svh-72px)] items-center gap-14 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
+      <motion.div
+        style={{ y: exitY, opacity: exitOpacity }}
+        className="container-site relative grid min-h-[calc(100svh-72px)] items-center gap-14 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-20"
+      >
         {/* ── copy ── */}
         <div className="text-center lg:text-start">
           <motion.div
@@ -110,6 +122,7 @@ export function Hero() {
             transition={{ delay: 0.62, duration: 0.6, ease: easeOut }}
             className="mt-8 flex flex-wrap items-center justify-center gap-3.5 lg:justify-start"
           >
+          <Magnetic>
             <a
               href="#contact"
               className="group relative inline-flex h-13 items-center gap-2 overflow-hidden rounded-xl bg-brand px-7 py-3.5 text-base font-extrabold text-white shadow-xl shadow-brand/40 transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-brand/60"
@@ -118,6 +131,7 @@ export function Hero() {
               {t.hero.ctaPrimary}
               <DirArrow className="size-5 transition-transform" />
             </a>
+          </Magnetic>
             <a
               href={whatsappUrl(lang)}
               target="_blank"
@@ -249,7 +263,7 @@ export function Hero() {
             </span>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

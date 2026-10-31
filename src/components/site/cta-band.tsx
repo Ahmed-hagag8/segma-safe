@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Phone } from "lucide-react";
 import { useLanguage } from "@/components/site/language-provider";
-import { Reveal, WhatsAppIcon } from "@/components/site/primitives";
+import { Magnetic, Reveal, WhatsAppIcon } from "@/components/site/primitives";
 import { PHONES } from "@/lib/site";
 import { whatsappUrl } from "@/lib/i18n";
 
@@ -12,7 +12,7 @@ export function CtaBand() {
 
   return (
     <section aria-label={t.cta.aria} className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-l from-brand-dark via-brand to-brand-dark" />
+      <div className="absolute inset-0 animate-gradient bg-gradient-to-l from-brand-dark via-brand to-brand-dark" />
       <div
         className="absolute inset-0 opacity-[0.12]"
         style={{
@@ -47,15 +47,17 @@ export function CtaBand() {
 
         <Reveal delay={0.15}>
           <div className="flex flex-wrap items-center justify-center gap-3.5">
-            <a
-              href={whatsappUrl(lang)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-xl bg-white px-7 py-4 text-base font-extrabold text-brand-dark shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl"
-            >
-              <WhatsAppIcon className="size-6 text-[#1da851]" />
-              {t.cta.whatsapp}
-            </a>
+            <Magnetic>
+              <a
+                href={whatsappUrl(lang)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-xl bg-white px-7 py-4 text-base font-extrabold text-brand-dark shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl"
+              >
+                <WhatsAppIcon className="size-6 text-[#1da851]" />
+                {t.cta.whatsapp}
+              </a>
+            </Magnetic>
             <a
               href={`tel:${PHONES[0].intl}`}
               className="group inline-flex items-center gap-2.5 rounded-xl border-2 border-white/70 px-7 py-[14px] text-base font-extrabold text-white transition-all hover:-translate-y-1 hover:border-white hover:bg-white/10"

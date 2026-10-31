@@ -1,10 +1,25 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useRef, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
+
+export const EASE_OUT = [0.21, 0.65, 0.35, 1] as const;
 
 /* ───────────────  Direction-aware arrow (← in RTL, → in LTR)  ─────────────── */
 
@@ -38,15 +53,219 @@ export function Reveal({
   delay = 0,
   y = 28,
   x = 0,
+  blur = true,
   once = true,
 }: RevealProps) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, x }}
-      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      initial={{ opacity: 0, y, x, filter: blur ? "blur(8px)" : "blur(0px)" }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        x: 0,
+        filter: "blur(0px)",
+      }}
       viewport={{ once, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.21, 0.65, 0.35, 1] }}
+      transition={{ duration: 0.7, delay, ease: EASE_OUT }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ───────────────  WordReveal: kinetic word-by-word headline  ─────────────── */
+
+/** Splits a short heading into words that slide up out of an overflow
+ *  mask, one after another. Word-level (never letter-level) so Arabic
+ *  shaping inside each word is untouched. */
+export function WordReveal({
+  text,
+  className,
+  delay = 0,
+  stagger = 0.055,
+}: {
+  text: string;
+  /** applied to EVERY word span (color/gradient must live per-word,
+   *  background-image does not inherit through the mask spans) */
+  className?: string;
+  delay?: number;
+  stagger?: number;
+}) {
+  const words = text.split(" ");
+  return (
+    <motion.span
+      className="inline"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: stagger, delayChildren: delay } },
+      }}
+      aria-label={text}
+    >
+      {words.map((word, i) => (
+        <span
+          key={`${word}-${i}`}
+          className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom"
+          aria-hidden="true"
+        >
+          <motion.span
+            className={cn("inline-block will-change-transform", className)}
+            variants={{
+              hidden: { y: "115%", opacity: 0 },
+              show: {
+                y: "0%",
+                opacity: 1,
+                transition: { duration: 0.55, ease: EASE_OUT },
+              },
+            }}
+          >
+            {word}
+          </motion.span>
+          {i < words.length - 1 ? "\u00A0" : null}
+        </span>
+      ))}
+    </motion.span>
+  );
+}
+
+/* ───────────────  ScrollProgress: brand bar filling with scroll  ─────────────── */
+
+export function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 26,
+    restDelta: 0.001,
+  });
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      style={{ scaleX }}
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-brand-dark via-brand to-brand-bright rtl:origin-right"
+    />
+  );
+}
+
+/* ───────────────  TiltCard: pointer-tracked 3D tilt + glare  ─────────────── */
+
+export function TiltCard({
+  children,
+  className,
+  max = 6,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** max tilt in degrees */
+  max?: number;
+}) {
+  const rx = useSpring(useMotionValue(0), { stiffness: 180, damping: 18 });
+  const ry = useSpring(useMotionValue(0), { stiffness: 180, damping: 18 });
+  const gx = useMotionValue(50);
+  const gy = useMotionValue(50);
+  const glare = useMotionTemplate`radial-gradient(420px circle at ${gx}% ${gy}%, rgba(255,255,255,0.14), transparent 65%)`;
+
+  function onPointerMove(e: MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    ry.set((px - 0.5) * 2 * max);
+    rx.set(-(py - 0.5) * 2 * max);
+    gx.set(px * 100);
+    gy.set(py * 100);
+  }
+
+  function reset() {
+    rx.set(0);
+    ry.set(0);
+    gx.set(50);
+    gy.set(50);
+  }
+
+  return (
+    <motion.div
+      onPointerMove={onPointerMove}
+      onPointerLeave={reset}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
+      className={cn("group/tilt relative will-change-transform", className)}
+    >
+      {children}
+      <motion.span
+        aria-hidden="true"
+        style={{ background: glare }}
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/tilt:opacity-100"
+      />
+    </motion.div>
+  );
+}
+
+/* ───────────────  Magnetic: element gently follows the cursor  ─────────────── */
+
+export function Magnetic({
+  children,
+  className,
+  pull = 0.28,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** fraction of the cursor offset the element follows (0..1) */
+  pull?: number;
+}) {
+  const x = useSpring(useMotionValue(0), { stiffness: 200, damping: 16 });
+  const y = useSpring(useMotionValue(0), { stiffness: 200, damping: 16 });
+
+  function onPointerMove(e: MouseEvent<HTMLSpanElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - (r.left + r.width / 2)) * pull);
+    y.set((e.clientY - (r.top + r.height / 2)) * pull);
+  }
+
+  return (
+    <motion.span
+      onPointerMove={onPointerMove}
+      onPointerLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+      style={{ x, y }}
+      className={cn("inline-block will-change-transform", className)}
+    >
+      {children}
+    </motion.span>
+  );
+}
+
+/* ───────────────  Parallax: subtle scroll-linked drift  ─────────────── */
+
+export function Parallax({
+  children,
+  className,
+  distance = 34,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** px traveled (down on entry, up on exit) across the viewport */
+  distance?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [distance, -distance]
+  );
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ y }}
+      className={cn("relative will-change-transform", className)}
     >
       {children}
     </motion.div>
@@ -143,15 +362,21 @@ export function SectionHeading({
           {eyebrow}
         </span>
       </Reveal>
-      <Reveal delay={0.08}>
+      <Reveal delay={0.08} y={14}>
         <h2
           className={cn(
             "mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-black leading-[1.25]",
             dark ? "text-white" : "text-foreground"
           )}
         >
-          {title}{" "}
-          {highlight && <span className="text-brand">{highlight}</span>}
+          <WordReveal text={title} />{" "}
+          {highlight && (
+            <WordReveal
+              text={highlight}
+              delay={0.14}
+              className="text-gradient-brand"
+            />
+          )}
         </h2>
       </Reveal>
       {desc && (

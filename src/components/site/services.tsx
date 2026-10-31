@@ -6,6 +6,7 @@ import {
   SectionHeading,
   StaggerContainer,
   StaggerItem,
+  TiltCard,
 } from "@/components/site/primitives";
 import { useLanguage } from "@/components/site/language-provider";
 import { SERVICE_ICONS } from "@/lib/site";
@@ -43,11 +44,12 @@ export function Services() {
             const Icon = SERVICE_ICONS[i];
             return (
               <StaggerItem key={service.title} className="h-full">
-                <motion.article
-                  whileHover={{ y: -8 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-charcoal/80 p-6 backdrop-blur-sm transition-colors hover:border-brand/50"
-                >
+                <TiltCard max={5} className="h-full">
+                  <motion.article
+                    whileHover={{ y: -8 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-charcoal/80 p-6 backdrop-blur-sm transition-colors hover:border-brand/50"
+                  >
                   {/* hover glow */}
                   <div
                     className="pointer-events-none absolute -top-24 start-1/2 size-48 -translate-x-1/2 rounded-full bg-brand/25 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
@@ -82,7 +84,8 @@ export function Services() {
                     className="absolute inset-x-0 bottom-0 h-1 origin-right scale-x-0 bg-gradient-to-l from-brand to-brand-bright transition-transform duration-500 group-hover:scale-x-100"
                     aria-hidden="true"
                   />
-                </motion.article>
+                  </motion.article>
+                </TiltCard>
               </StaggerItem>
             );
           })}

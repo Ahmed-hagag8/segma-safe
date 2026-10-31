@@ -244,6 +244,78 @@
   animation: shimmer 5s linear infinite;
 }
 
+/* animated brand gradient used on highlighted heading words */
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--brand) 25%,
+    var(--brand-bright) 50%,
+    var(--brand) 75%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 6s ease-in-out infinite;
+}
+
+@utility animate-gradient {
+  background-size: 200% 100%;
+  animation: gradient-pan 10s ease-in-out infinite;
+}
+
+/* ── Sliding-book (Our Work) helpers ── */
+
+/* paper face shown while a page is mid-flip */
+@utility book-paper {
+  background:
+    linear-gradient(
+      to left,
+      rgba(20, 20, 22, 0.06),
+      rgba(20, 20, 22, 0) 22%
+    ),
+    linear-gradient(180deg, #f3f2ee, #e9e7e0);
+}
+.dark .book-paper {
+  background:
+    linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0) 22%
+    ),
+    linear-gradient(180deg, #26262b, #1e1e22);
+}
+
+/* stacked page edges on the book's outer side */
+@utility book-edges {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.85) 0 2px,
+    rgba(20, 20, 22, 0.12) 2px 3px
+  );
+}
+.dark .book-edges {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.16) 0 2px,
+    rgba(0, 0, 0, 0.4) 2px 3px
+  );
+}
+
+/* autoplay progress bar + timer live in the Gallery component
+   (framer-motion drives both so they stay perfectly in sync) */
+
+
 /* light-mode dots pattern flips to faint white dots in dark mode */
 @utility bg-dots-light {
   background-image: radial-gradient(rgba(20, 20, 22, 0.08) 1px, transparent 1px);

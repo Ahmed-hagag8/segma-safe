@@ -77,7 +77,20 @@ export function WhyUs() {
                 className="group flex gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:border-brand/30 hover:shadow-xl hover:shadow-brand/10"
               >
                 <span className="relative flex size-13 shrink-0 items-center justify-center rounded-2xl bg-accent font-mono text-xl font-bold text-brand transition-colors group-hover:bg-brand group-hover:text-white">
-                  {String(i + 1).padStart(2, "0")}
+                  <motion.span
+                    initial={{ scale: 0, rotate: -14 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 320,
+                      damping: 15,
+                      delay: 0.15 + i * 0.05,
+                    }}
+                    className="inline-block"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </motion.span>
                 </span>
                 <div>
                   <h3 className="flex items-center gap-2 text-lg font-black text-foreground">
