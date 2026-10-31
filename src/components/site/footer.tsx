@@ -89,15 +89,18 @@ export function Footer() {
         <div>
           <h3 className="mb-5 text-lg font-black">{t.footer.contactTitle}</h3>
           <div className="space-y-4 text-sm">
-            <a
-              href={`tel:${PHONES[0].intl}`}
-              className="flex items-start gap-3 text-white/60 transition-colors hover:text-white"
-            >
-              <Phone className="mt-0.5 size-4.5 shrink-0 text-brand-bright" />
-              <span dir="ltr" className="font-mono tracking-wide">
-                {PHONES.map((p) => p.raw).join(" • ")}
-              </span>
-            </a>
+            {PHONES.map((p) => (
+              <a
+                key={p.raw}
+                href={`tel:${p.intl}`}
+                className="flex items-start gap-3 text-white/60 transition-colors hover:text-white"
+              >
+                <Phone className="mt-0.5 size-4.5 shrink-0 text-brand-bright" />
+                <span dir="ltr" className="font-mono tracking-wide">
+                  {p.raw}
+                </span>
+              </a>
+            ))}
             <p className="flex items-start gap-3 text-white/60">
               <MapPin className="mt-0.5 size-4.5 shrink-0 text-brand-bright" />
               <span className="leading-relaxed">{t.meta.address}</span>
