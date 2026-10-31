@@ -1,6 +1,5 @@
 import {
   ShowerHead,
-  BellRing,
   Cylinder,
   Waves,
   Gauge,

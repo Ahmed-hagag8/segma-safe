@@ -9,18 +9,21 @@ import { LanguageProvider } from "@/components/site/language-provider";
 const cairo = Cairo({
   variable: "--font-cairo",
   subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

@@ -31,6 +31,23 @@ import {
 } from "@/components/site/primitives";
 import { PHONES } from "@/lib/site";
 import { whatsappUrl } from "@/lib/i18n";
+import { CONTACT_LIMITS, PHONE_REGEX } from "@/lib/validation";
+
+/** Localized messages for API error codes (see app/api/contact/route.ts). */
+const API_ERRORS = {
+  RATE_LIMITED: {
+    ar: "أرسلت عدة طلبات خلال وقت قصير. حاول مرة أخرى بعد 10 دقائق أو تواصل معنا عبر واتساب.",
+    en: "Too many requests. Please try again in 10 minutes or reach us on WhatsApp.",
+  },
+  TOO_LARGE: {
+    ar: "الرسالة طويلة جداً. يرجى اختصارها.",
+    en: "Your message is too long. Please shorten it.",
+  },
+  INVALID: {
+    ar: "يرجى التحقق من البيانات المدخلة.",
+    en: "Please check the information you entered.",
+  },
+} as const;
 
 export function Contact() {
   const [serviceIdx, setServiceIdx] = useState<string>("");
@@ -39,15 +56,22 @@ export function Contact() {
   const schema = useMemo(
     () =>
       z.object({
-        name: z.string().min(2, t.contact.errName),
-        phone: z
+        name: z
           .string()
-          .regex(/^[0-9+\s-]{9,15}$/, t.contact.errPhone),
-        company: z.string().optional(),
+          .trim()
+          .min(CONTACT_LIMITS.nameMin, t.contact.errName)
+          .max(CONTACT_LIMITS.nameMax, t.contact.errName),
+        phone: z.string().trim().regex(PHONE_REGEX, t.contact.errPhone),
+        company: z.string().max(CONTACT_LIMITS.companyMax).optional(),
         service: z.string().optional(),
-        message: z.string().min(10, t.contact.errMessage),
+        message: z
+          .string()
+          .trim()
+          .min(CONTACT_LIMITS.messageMin, t.contact.errMessage)
+          .max(CONTACT_LIMITS.messageMax, API_ERRORS.TOO_LARGE[lang]),
+        honeypot: z.string().optional(),
       }),
-    [t]
+    [t, lang]
   );
 
   type FormData = z.infer<typeof schema>;
@@ -72,16 +96,35 @@ export function Contact() {
               : t.contact.serviceOptions[Number(serviceIdx)],
         }),
       });
-      if (!res.ok) throw new Error("failed");
+      // A proxy error page may not be JSON — never let parsing crash the handler
+      const result: { ok?: boolean; code?: string; whatsappUrl?: string } = await res
+        .json()
+        .catch(() => ({}));
+
+      if (!res.ok) {
+        const known = API_ERRORS[result.code as keyof typeof API_ERRORS];
+        toast.error(t.contact.toastErr, {
+          description: known ? known[lang] : t.contact.toastErrDesc,
+        });
+        return;
+      }
+
+      const waUrl = result.whatsappUrl;
       toast.success(t.contact.toastOk, {
         description: t.contact.toastOkDesc,
+        duration: waUrl ? 10000 : undefined,
+        action: waUrl
+          ? {
+              label: lang === "ar" ? "متابعة عبر واتساب" : "Continue on WhatsApp",
+              onClick: () => window.open(waUrl, "_blank", "noopener,noreferrer"),
+            }
+          : undefined,
       });
       reset();
       setServiceIdx("");
     } catch {
-      toast.error(t.contact.toastErr, {
-        description: t.contact.toastErrDesc,
-      });
+      // Network failure (offline, DNS, server down)
+      toast.error(t.contact.toastErr, { description: t.contact.toastErrDesc });
     }
   }
 
@@ -170,6 +213,18 @@ export function Contact() {
               <p className="mt-2 text-sm text-muted-foreground">
                 {t.contact.formSub}
               </p>
+
+              {/* Honeypot field for anti-spam detection */}
+              <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                <label htmlFor="website-contact-hp">Website</label>
+                <input
+                  id="website-contact-hp"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  {...register("honeypot")}
+                />
+              </div>
 
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
                 <Field label={t.contact.nameLabel} error={errors.name?.message}>
