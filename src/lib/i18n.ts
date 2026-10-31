@@ -204,12 +204,9 @@ const ar = {
     closeAria: "إغلاق العرض",
     prevAria: "المشروع السابق",
     nextAria: "المشروع التالي",
-    pageOf: (i: number, n: number) => `مشروع ${i} من ${n}`,
-    flipHint: "اسحب الصفحة أو استخدم الأسهم لتقليب الألبوم",
-    pauseAria: "إيقاف التقليب التلقائي",
-    playAria: "استئناف التقليب التلقائي",
     ourWork: "أعمالنا",
     openLightbox: "تكبير الصورة",
+    scrollHint: "مرّر للأسفل للانتقال من مشروع إلى آخر",
     items: [
       {
         title: "وحدة ضخ ديزل كاملة",
@@ -530,12 +527,9 @@ const en: Dict = {
     closeAria: "Close preview",
     prevAria: "Previous project",
     nextAria: "Next project",
-    pageOf: (i: number, n: number) => `Project ${i} of ${n}`,
-    flipHint: "Drag the page or use the arrows to flip the album",
-    pauseAria: "Pause auto-flip",
-    playAria: "Resume auto-flip",
     ourWork: "Our Work",
     openLightbox: "View larger",
+    scrollHint: "Scroll down to slide from one project to the next",
     items: [
       {
         title: "Complete Diesel Pump Unit",
