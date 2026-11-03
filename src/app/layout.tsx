@@ -27,9 +27,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sigma-safe.com"),
+  metadataBase: new URL("https://segma-safe.com"),
   alternates: {
-    canonical: "https://sigma-safe.com",
+    canonical: "https://segma-safe.com",
   },
   title: {
     default: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار والمقاولات العامة | الجيزة، مصر",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     "fire suppression Egypt",
     "fire fighting contractor",
   ],
-  authors: [{ name: "Sigma Safe", url: "https://sigma-safe.com" }],
+  authors: [{ name: "Sigma Safe", url: "https://segma-safe.com" }],
   creator: "SIGMA SAFE",
   publisher: "SIGMA SAFE",
   formatDetection: {
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     description:
       "تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق أحدث الأكواد العالمية ومعايير NFPA — وكيل معتمد بالجيزة، مصر.",
     siteName: "SIGMA SAFE — سيجما سيف",
-    url: "https://sigma-safe.com",
+    url: "https://segma-safe.com",
     images: [
       {
         url: "/images/banner-hero.jpg",

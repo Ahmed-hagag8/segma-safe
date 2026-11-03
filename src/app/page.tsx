@@ -19,14 +19,14 @@ import { GALLERY_IMAGES, PHONES } from "@/lib/site";
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://sigma-safe.com/#organization",
+  "@id": "https://segma-safe.com/#organization",
   name: "سيجما سيف للمقاولات العامة — SIGMA SAFE",
   alternateName: "Sigma Safe General Contracting",
   description:
     "سيجما سيف للمقاولات العامة والتوريدات العمومية ونظم الإطفاء والإنذار ومهام الأمن الصناعي — Sigma Safe: fire suppression & alarm systems, general contracting and industrial security.",
-  url: "https://sigma-safe.com",
-  logo: "https://sigma-safe.com/images/logo.jpg",
-  image: "https://sigma-safe.com/images/banner-hero.jpg",
+  url: "https://segma-safe.com",
+  logo: "https://segma-safe.com/images/logo.jpg",
+  image: "https://segma-safe.com/images/banner-hero.jpg",
   telephone: PHONES.map((p) => p.intl),
   address: {
     "@type": "PostalAddress",
@@ -104,12 +104,12 @@ const localBusinessSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://sigma-safe.com/#website",
+  "@id": "https://segma-safe.com/#website",
   name: "سيجما سيف — SIGMA SAFE",
-  url: "https://sigma-safe.com",
+  url: "https://segma-safe.com",
   inLanguage: ["ar", "en"],
   publisher: {
-    "@id": "https://sigma-safe.com/#organization",
+    "@id": "https://segma-safe.com/#organization",
   },
 };
 
@@ -123,7 +123,7 @@ const servicesSchema = {
       position: 1,
       name: "أنظمة الرشاشات التلقائية (Fire Sprinklers)",
       description: "تصميم وتوريد وتركيب شبكات الرشاشات المائية وفق أحدث أكواد NFPA 13 والحماية المدنية.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
     {
@@ -131,7 +131,7 @@ const servicesSchema = {
       position: 2,
       name: "محطات ومضخات الحريق (Fire Pumps)",
       description: "توريد وتركيب واختبار مضخات الحريق ديزل وكهرباء وجوكي بمطابقة تامة لأكواد NFPA 20.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
     {
@@ -139,7 +139,7 @@ const servicesSchema = {
       position: 3,
       name: "أنظمة الإنذار والكشف المبكر (Fire Alarm)",
       description: "لوحات تحكم ذكية معنونة وتقليدية، كواشف دخان وحرارة، وسرائن إنذار بمطابقة NFPA 72.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
     {
@@ -147,7 +147,7 @@ const servicesSchema = {
       position: 4,
       name: "أنظمة الغازات النظيفة (FM200 / CO2)",
       description: "إخماد آمن لغرف الخوادم والكهرباء والبيانات بدون إتلاف الأجهزة وبدون ترك أثر.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
     {
@@ -155,7 +155,7 @@ const servicesSchema = {
       position: 5,
       name: "أنظمة الإطفاء بالرغوة (Foam Systems)",
       description: "حلول متقدمة للمستودعات ومحطات الوقود والمخازن الكيميائية للسيطرة السريعة على حرائق السوائل.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
     {
@@ -163,7 +163,7 @@ const servicesSchema = {
       position: 6,
       name: "عقود الصيانة والاختبار الدوري (Maintenance)",
       description: "زيارات وقائية واختبارات ضغط ومعايرة دورية مع تقارير هندسية معتمدة لضمان الجاهزية الدائمة.",
-      provider: { "@id": "https://sigma-safe.com/#organization" },
+      provider: { "@id": "https://segma-safe.com/#organization" },
       areaServed: "EG",
     },
   ],
@@ -224,43 +224,43 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "الرئيسية",
-      item: "https://sigma-safe.com",
+      item: "https://segma-safe.com",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "من نحن",
-      item: "https://sigma-safe.com/#about",
+      item: "https://segma-safe.com/#about",
     },
     {
       "@type": "ListItem",
       position: 3,
       name: "خدماتنا",
-      item: "https://sigma-safe.com/#services",
+      item: "https://segma-safe.com/#services",
     },
     {
       "@type": "ListItem",
       position: 4,
       name: "لماذا نحن",
-      item: "https://sigma-safe.com/#why",
+      item: "https://segma-safe.com/#why",
     },
     {
       "@type": "ListItem",
       position: 5,
       name: "أعمالنا",
-      item: "https://sigma-safe.com/#gallery",
+      item: "https://segma-safe.com/#gallery",
     },
     {
       "@type": "ListItem",
       position: 6,
       name: "الأسئلة الشائعة",
-      item: "https://sigma-safe.com/#faq",
+      item: "https://segma-safe.com/#faq",
     },
     {
       "@type": "ListItem",
       position: 7,
       name: "تواصل معنا",
-      item: "https://sigma-safe.com/#contact",
+      item: "https://segma-safe.com/#contact",
     },
   ],
 };
@@ -272,12 +272,12 @@ const imageGallerySchema = {
   description: "صور محطات ومضخات الحريق وشبكات الإطفاء ولوحات التحكم المنفذة بواسطة سيجما سيف في مصر",
   image: GALLERY_IMAGES.map((img, i) => ({
     "@type": "ImageObject",
-    contentUrl: `https://sigma-safe.com${img}`,
+    contentUrl: `https://segma-safe.com${img}`,
     name: `مشروع سيجما سيف لأنظمة الإطفاء والإنذار — وحدة رقم ${i + 1}`,
     description: "تصميم وتوريد وتركيب واختبار مضخات الحريق ولوحات التحكم وفق معايير NFPA",
     creditText: "SIGMA SAFE",
     copyrightHolder: {
-      "@id": "https://sigma-safe.com/#organization",
+      "@id": "https://segma-safe.com/#organization",
     },
   })),
 };
