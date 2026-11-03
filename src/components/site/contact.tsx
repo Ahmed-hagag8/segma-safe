@@ -110,6 +110,9 @@ export function Contact() {
       }
 
       const waUrl = result.whatsappUrl;
+      if (waUrl) {
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+      }
       toast.success(t.contact.toastOk, {
         description: t.contact.toastOkDesc,
         duration: waUrl ? 10000 : undefined,
