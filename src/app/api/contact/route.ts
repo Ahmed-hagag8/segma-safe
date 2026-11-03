@@ -72,8 +72,14 @@ export async function POST(req: Request) {
       message: sanitizeString(parsed.data.message),
     };
 
-    // 6. Persist
-    const saved = await db.contactMessage.create({ data });
+    // 6. Persist (graceful fallback if serverless environment has no writable DB)
+    let savedId: string | undefined;
+    try {
+      const saved = await db.contactMessage.create({ data });
+      savedId = saved.id;
+    } catch (dbError) {
+      console.warn("[contact] DB persist skipped (e.g. read-only serverless filesystem):", dbError);
+    }
 
     // 7. WhatsApp: optional automatic alert (non-blocking) + pre-filled chat link for the visitor
     sendWhatsAppNotification(data).catch((err) => {
@@ -81,7 +87,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { ok: true, id: saved.id, whatsappUrl: getWhatsAppDirectUrl(data) },
+      { ok: true, id: savedId ?? "direct-wa", whatsappUrl: getWhatsAppDirectUrl(data) },
       { status: 201 }
     );
   } catch (error) {
