@@ -36,12 +36,41 @@ export function getWhatsAppDirectUrl(data: ContactNotificationPayload): string {
 }
 
 /**
- * Automatic server-side alert via Meta WhatsApp Cloud API (only if configured).
- * NOTE: Meta delivers free-form text only inside a 24h customer-service window;
- * outside it you must send an approved *template* message. Failures are logged.
- * Returns false when not configured or on failure.
+ * Automatic WhatsApp alert to the company via CallMeBot gateway.
+ */
+export async function sendCallMeBotNotification(data: ContactNotificationPayload): Promise<boolean> {
+  const apiKey = process.env.CALLMEBOT_API_KEY;
+  if (!apiKey) return false;
+
+  const phone = (process.env.CALLMEBOT_PHONE || env.WHATSAPP_NOTIFY_PHONE).replace(/[^0-9]/g, "");
+  const text = encodeURIComponent(formatWhatsAppMessage(data));
+
+  try {
+    const res = await fetch(
+      `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apiKey}`,
+      { signal: AbortSignal.timeout(10000) }
+    );
+    if (!res.ok) {
+      console.error("[callmebot] Rejected with status:", res.status);
+    }
+    return res.ok;
+  } catch (err) {
+    console.error("[callmebot] Notification failed:", err);
+    return false;
+  }
+}
+
+/**
+ * Sends an automated WhatsApp alert to the company via CallMeBot (primary)
+ * or Meta WhatsApp Cloud API (secondary, if configured).
  */
 export async function sendWhatsAppNotification(data: ContactNotificationPayload): Promise<boolean> {
+  // 1. Prioritize CallMeBot if API key is provided
+  if (process.env.CALLMEBOT_API_KEY) {
+    return sendCallMeBotNotification(data);
+  }
+
+  // 2. Fallback to Meta Cloud API if configured
   if (!env.WHATSAPP_API_TOKEN || !env.WHATSAPP_PHONE_NUMBER_ID) return false;
 
   try {
