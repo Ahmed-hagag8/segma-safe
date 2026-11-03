@@ -24,6 +24,7 @@ const ar = {
       { href: "#why", label: "لماذا نحن" },
       { href: "#process", label: "مراحل العمل" },
       { href: "#gallery", label: "أعمالنا" },
+      { href: "#faq", label: "الأسئلة الشائعة" },
       { href: "#contact", label: "تواصل معنا" },
     ],
     freeSurvey: "معاينة مجانية",
@@ -303,6 +304,35 @@ const ar = {
     ],
   },
 
+  faq: {
+    eyebrow: "الأسئلة الشائعة",
+    title: "إجابات على",
+    highlight: "أهم استفساراتكم",
+    desc: "كل ما تحتاج معرفته حول معايير الحماية من الحريق، التراخيص، والمعاينة الهندسية لمنشأتك.",
+    items: [
+      {
+        q: "هل أنظمة سيجما سيف معتمدة ومطابقة لاشتراطات الحماية المدنية؟",
+        a: "نعم، جميع مخططاتنا وأعمالنا الهندسية مصممة ومنفذة وفق اشتراطات إدارة الحماية المدنية المصرية وأحدث معايير وأكواد الجمعية الوطنية الأمريكية للحماية من الحرائق (NFPA).",
+      },
+      {
+        q: "ما هي الخدمات الهندسية الأساسية التي تقدمها الشركة؟",
+        a: "نقدم حلولاً متكاملة «مفتاح في اليد» تشمل دراسة وتصميم وتوريد وتركيب وصيانة شبكات الرشاشات المائية، محطات ومضخات الحريق، أنظمة الإنذار المبكر، غازات الإخماد النظيف FM200 و CO2، أنظمة الرغوة، وتجهيزات السلامة والصحة المهنية.",
+      },
+      {
+        q: "كيف يمكنني طلب معاينة فنية مجانية لمنشأتي؟",
+        a: "يمكنك طلب المعاينة مباشرة عبر ملء نموذج التواصل على الموقع، أو التواصل الفوري عبر واتساب أو الاتصال بالأرقام المباشرة: 01039661221 / 01039595147، وسيتواصل معك مهندس متخصص لتحديد موعد الزيارة الميدانية.",
+      },
+      {
+        q: "ما الفرق بين أنظمة الإطفاء المائية وغازات FM200 النظيفة؟",
+        a: "تُستخدم شبكات الرشاشات المائية للمباني العامة والمستودعات والمصانع للسيطرة على الحرائق الكبرى، بينما تُخصص أنظمة الغازات النظيفة مثل FM200 لغرف السيرفرات والتحكم ومراكز البيانات الحساسة لإخماد الحريق خلال ثوانٍ معدودة دون إتلاف الأجهزة ودون ترك أي رواسب أو مياه.",
+      },
+      {
+        q: "هل تقدمون عقود صيانة دورية واختبارات لشبكات الحريق القائمة؟",
+        a: "نعم، نوفر عقود صيانة دورية وقائية تشمل فحص مضخات الحريق، اختبارات ضغط الشبكات، فحص لوحات الإنذار والكواشف، وإصدار تقارير فنية معتمدة تضمن الجاهزية الدائمة لمنشأتك وتوافقها مع التفتيش الرقابي.",
+      },
+    ],
+  },
+
   footer: {
     quickLinks: "روابط سريعة",
     servicesTitle: "خدماتنا",
@@ -342,6 +372,7 @@ const en: Dict = {
       { href: "#why", label: "Why Us" },
       { href: "#process", label: "Work Process" },
       { href: "#gallery", label: "Our Work" },
+      { href: "#faq", label: "FAQ" },
       { href: "#contact", label: "Contact Us" },
     ],
     freeSurvey: "Free Survey",
@@ -623,6 +654,35 @@ const en: Dict = {
       "Fire Networks & Hydrants",
       "Periodic Maintenance / Annual Contract",
       "General Technical Consultation",
+    ],
+  },
+
+  faq: {
+    eyebrow: "FAQ",
+    title: "Answers to",
+    highlight: "Frequently Asked Questions",
+    desc: "Everything you need to know about fire safety codes, approvals, and free technical site surveys.",
+    items: [
+      {
+        q: "Are Sigma Safe systems certified and compliant with Civil Defense standards?",
+        a: "Yes, all our engineering designs and installations strictly adhere to Egyptian Civil Defense authority guidelines and the latest NFPA (National Fire Protection Association) international safety codes.",
+      },
+      {
+        q: "What core engineering services does Sigma Safe provide?",
+        a: "We deliver turnkey solutions including design, supply, installation, and maintenance of automatic fire sprinkler networks, UL/FM fire pumps, early fire alarm systems, FM200/CO2 clean agent suppression, foam systems, and HSE occupational safety supplies.",
+      },
+      {
+        q: "How can I request a free technical site survey?",
+        a: "You can request a survey by submitting our contact form, messaging us directly on WhatsApp, or calling 01039661221 / 01039595147. A specialized fire protection engineer will arrange an on-site visit.",
+      },
+      {
+        q: "What is the difference between water sprinkler systems and FM200 clean agents?",
+        a: "Water sprinklers protect general facilities, factories, and warehouses from large-scale structural fires. In contrast, clean agents like FM200 and CO2 are specifically engineered for sensitive electrical rooms, server rooms, and data centers to suppress fires within seconds without water damage or residue.",
+      },
+      {
+        q: "Do you offer periodic maintenance contracts and testing for existing fire systems?",
+        a: "Yes, we provide scheduled preventive maintenance contracts including pump flow testing, pipe hydrostatic pressure tests, alarm control panel calibration, and certified technical compliance inspection reports.",
+      },
     ],
   },
 

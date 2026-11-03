@@ -27,13 +27,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sigma-safe.eg"),
+  metadataBase: new URL("https://sigma-safe.com"),
+  alternates: {
+    canonical: "https://sigma-safe.com",
+  },
   title: {
-    default: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار والمقاولات العامة",
+    default: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار والمقاولات العامة | الجيزة، مصر",
     template: "%s | سيجما سيف SIGMA SAFE",
   },
   description:
-    "شركة سيجما سيف للمقاولات العامة والتوريدات العمومية — تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار، مهام الأمن الصناعي والسلامة المهنية، وفق أحدث الأكواد العالمية. وكيل معتمد — الجيزة، مصر.",
+    "شركة سيجما سيف للمقاولات العامة والتوريدات العمومية — تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار، مهام الأمن الصناعي والسلامة المهنية، وفق أحدث الأكواد العالمية (NFPA). وكيل معتمد — الجيزة، مصر. Certified fire alarm & suppression systems in Egypt.",
   keywords: [
     "سيجما سيف",
     "SIGMA SAFE",
@@ -44,25 +47,75 @@ export const metadata: Metadata = {
     "FM200",
     "رشاشات حريق",
     "وحدات ضخ",
+    "مضخات حريق",
     "مقاولات عامة",
     "الجيزة",
     "مصر",
+    "شركة إطفاء حريق",
+    "أنظمة رغوة",
+    "إنذار حريق معنون",
+    "صيانة أنظمة إطفاء",
+    "أمن صناعي",
+    "سلامة مهنية",
+    "NFPA",
+    "fire alarm systems Egypt",
+    "fire suppression Egypt",
+    "fire fighting contractor",
   ],
-  authors: [{ name: "Sigma Safe" }],
-  icons: { icon: "/images/logo.jpg" },
+  authors: [{ name: "Sigma Safe", url: "https://sigma-safe.com" }],
+  creator: "SIGMA SAFE",
+  publisher: "SIGMA SAFE",
+  formatDetection: {
+    telephone: true,
+    address: true,
+    email: true,
+  },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/images/logo.jpg" },
+    ],
+    apple: "/images/logo.jpg",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار",
+    title: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار والمقاولات العامة",
     description:
-      "تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق أحدث الأكواد العالمية — وكيل معتمد.",
+      "تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق أحدث الأكواد العالمية ومعايير NFPA — وكيل معتمد بالجيزة، مصر.",
     siteName: "SIGMA SAFE — سيجما سيف",
-    images: [{ url: "/images/banner-hero.jpg", width: 1536, height: 864 }],
+    url: "https://sigma-safe.com",
+    images: [
+      {
+        url: "/images/banner-hero.jpg",
+        width: 1536,
+        height: 864,
+        alt: "سيجما سيف — SIGMA SAFE | أنظمة الإطفاء والإنذار",
+      },
+    ],
     locale: "ar_EG",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "سيجما سيف | SIGMA SAFE",
-    description: "نظم الإطفاء والإنذار والمقاولات العامة — وكيل معتمد",
+    title: "سيجما سيف | SIGMA SAFE — نظم الإطفاء والإنذار",
+    description: "تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق أحدث الأكواد العالمية — وكيل معتمد",
+    images: ["/images/banner-hero.jpg"],
+  },
+  other: {
+    "geo.region": "EG-GZ",
+    "geo.placename": "Giza, Egypt",
+    "geo.position": "30.0561;31.2089",
+    "ICBM": "30.0561, 31.2089",
   },
 };
 
@@ -90,6 +143,12 @@ export default function RootLayout({
       <body
         className={`${cairo.variable} ${geistMono.variable} ${inter.variable} font-sans antialiased bg-background text-foreground`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:rounded-xl focus:bg-brand focus:px-4 focus:py-2.5 focus:text-white focus:shadow-xl focus:outline-none"
+        >
+          تخطي إلى المحتوى الرئيسي
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

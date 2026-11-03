@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
   output: process.env.BUILD_STANDALONE === "1" ? "standalone" : undefined,
   poweredByHeader: false,
   reactStrictMode: true,
+  trailingSlash: false,
   images: {
     formats: ["image/avif", "image/webp"],
   },

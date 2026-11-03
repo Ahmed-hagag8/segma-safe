@@ -101,10 +101,10 @@ export function Footer() {
                 </span>
               </a>
             ))}
-            <p className="flex items-start gap-3 text-white/60">
+            <address className="flex items-start gap-3 text-white/60 not-italic">
               <MapPin className="mt-0.5 size-4.5 shrink-0 text-brand-bright" />
               <span className="leading-relaxed">{t.meta.address}</span>
-            </p>
+            </address>
           </div>
         </div>
       </div>

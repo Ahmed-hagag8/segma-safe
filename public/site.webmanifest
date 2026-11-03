@@ -1,0 +1,20 @@
+{
+  "name": "سيجما سيف للمقاولات العامة — SIGMA SAFE",
+  "short_name": "SIGMA SAFE",
+  "description": "تصميم وتوريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق أحدث الأكواد العالمية — وكيل معتمد",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#d31017",
+  "background_color": "#141416",
+  "display": "standalone",
+  "start_url": "/"
+}
+

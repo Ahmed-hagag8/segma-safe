@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /api/
 
-Sitemap: https://sigma-safe.eg/sitemap.xml
+Sitemap: https://sigma-safe.com/sitemap.xml
