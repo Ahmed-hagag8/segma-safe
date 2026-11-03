@@ -71,6 +71,9 @@ export const metadata: Metadata = {
     email: true,
   },
   manifest: "/site.webmanifest",
+  verification: {
+    google: "google01607e4487ec075f",
+  },
   icons: {
     icon: [
       { url: "/images/logo.jpg" },
