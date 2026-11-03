@@ -109,19 +109,9 @@ export function Contact() {
         return;
       }
 
-      const waUrl = result.whatsappUrl;
-      if (waUrl) {
-        window.open(waUrl, "_blank", "noopener,noreferrer");
-      }
       toast.success(t.contact.toastOk, {
         description: t.contact.toastOkDesc,
-        duration: waUrl ? 10000 : undefined,
-        action: waUrl
-          ? {
-              label: lang === "ar" ? "متابعة عبر واتساب" : "Continue on WhatsApp",
-              onClick: () => window.open(waUrl, "_blank", "noopener,noreferrer"),
-            }
-          : undefined,
+        duration: 6000,
       });
       reset();
       setServiceIdx("");
